@@ -14,5 +14,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
+
+Route::get('/index','indexController@index');
+
+//Barang
+Route::get('/dataBarang','barangContoller@index');
+
+//Pegawai
+Route::get('/dataPegawai','pegawaiContoller@index');
+
+//Ketgori
+Route::get('/dataKategori','kategoriContoller@index');
+
+//Jabatan
+Route::get('/dataJabatan','jabatanContoller@index');
