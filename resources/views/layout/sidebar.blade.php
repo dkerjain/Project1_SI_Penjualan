@@ -65,8 +65,18 @@
               </li>
             </ul>
           </li>
+          
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="/pemeriksaan" class="nav-link">
+              <i class="nav-icon fas fa-eye"></i>
+              <p>
+                Pemeriksaan
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/pemesanan" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
               <p>
                 Pemesanan
@@ -75,7 +85,7 @@
           </li>
           
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="/penjualan" class="nav-link">
               <i class="nav-icon fas fa-book"></i>
               <p>
                 Penjualan
@@ -83,7 +93,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="/pembayaran" class="nav-link">
               <i class="nav-icon fas fa-calculator"></i>
               <p>
                 Pembayaran
@@ -91,7 +101,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="/laporan" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 Laporan

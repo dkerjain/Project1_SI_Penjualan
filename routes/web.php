@@ -30,3 +30,18 @@ Route::get('/dataKategori','kategoriContoller@index');
 
 //Jabatan
 Route::get('/dataJabatan','jabatanContoller@index');
+
+//Penjualan
+Route::get('/penjualan','penjualanContoller@index');
+
+//Pemeriksaan
+Route::get('/pemeriksaan','pemeriksaanContoller@index');
+
+//Pemesanan
+Route::get('/pemesanan','pemesananContoller@index');
+
+//Pembayaran
+Route::get('/pembayaran','pembayaranContoller@index');
+
+//Laporan
+Route::get('/laporan','laporanContoller@index');
