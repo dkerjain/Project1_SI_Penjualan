@@ -20,7 +20,7 @@
                         <h3 class="card-title mt-3"><b>Data Penjualan</b></h3>
                     </div>
                     <div class="col-2">
-                        <button  class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal-lg">Tambah Penjualan</button>
+                        <a href="/inputPenjualan"><button  class="btn btn-primary btn-block">Tambah Penjualan</button></a>
                     </div>
               </div>
               <!-- /.card-header -->

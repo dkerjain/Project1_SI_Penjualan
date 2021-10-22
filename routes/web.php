@@ -33,12 +33,14 @@ Route::get('/dataJabatan','jabatanContoller@index');
 
 //Penjualan
 Route::get('/penjualan','penjualanContoller@index');
+Route::get('/inputPenjualan','penjualanContoller@input');
 
 //Pemeriksaan
 Route::get('/pemeriksaan','pemeriksaanContoller@index');
 
 //Pemesanan
 Route::get('/pemesanan','pemesananContoller@index');
+Route::get('/inputPemesanan','pemesananContoller@input');
 
 //Pembayaran
 Route::get('/pembayaran','pembayaranContoller@index');
