@@ -87,6 +87,8 @@
 @endsection
 
 @section('script')
+<script src="{{ asset('../../asset/plugins/daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset('../../asset/plugins/daterangepicker/daterangepicker.js') }}"></script>
 <script src="{{ asset('../../asset/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('../../asset/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('../../asset/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
@@ -100,7 +102,6 @@
 <script src="{{ asset('../../asset/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('../../asset/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
-<script src="{{ asset('../../asset/plugins/daterangepicker/daterangepicker.js') }}"></script>
 <!-- InputMask -->
 <script src="{{ asset('../../plugins/moment/moment.min.js') }}"></script>
 <script src="{{ asset('../../plugins/inputmask/jquery.inputmask.min.js') }}"></script>
@@ -128,8 +129,25 @@
 <script>
     $(function () {
 
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+
     //Date range picker
     $('#reservation').daterangepicker()
+
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({
+      timePicker: true,
+      timePickerIncrement: 30,
+      locale: {
+        format: 'MM/DD/YYYY hh:mm A'
+      }
+    })
 
     //Date range as a button
     $('#daterange-btn').daterangepicker(
@@ -149,6 +167,11 @@
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
         }
     )
+
+    //Timepicker
+    $('#timepicker').datetimepicker({
+      format: 'LT'
+    })
 });
 </script>
 
