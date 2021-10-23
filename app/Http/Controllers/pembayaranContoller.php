@@ -6,14 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-class indexController extends Controller
+class pembayaranContoller extends Controller
 {
     //
     public function index(){
         if(!Session::get('/Login')){
             return redirect('/');
         }else{
-            return view ('layout/index');
+            return view ('konten/transaksi/pembayaran');
         }
     }
 }
