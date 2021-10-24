@@ -116,7 +116,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/" class="nav-link btn-secondary">
+            <a href="/logoutCek" class="nav-link btn-secondary">
               <i class="nav-icon fas fa-ellipsis-h"></i>
               <p>Logout Akun</p>
             </a>
