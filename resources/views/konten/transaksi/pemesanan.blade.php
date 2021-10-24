@@ -129,14 +129,14 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                         <label>Jumlah Bayar</label>
-                        <input type="text" class="form-control" placeholder="0" >
+                        <input type="text" class="form-control" placeholder="Rp. 100.000" >
                         </div>
                     </div>
 
                     <div class="col-sm-6">
                         <div class="form-group">
                         <label>Sisa Bayar</label>
-                        <input type="text" class="form-control" placeholder="0" >
+                        <input type="text" class="form-control" placeholder="Rp. 150.000" >
                         </div>
                     </div>
 
@@ -145,6 +145,7 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success">Tambah Pembayaran</button>
                 <button type="button" class="btn btn-primary">Simpan</button>
                 </div>
             </div>
