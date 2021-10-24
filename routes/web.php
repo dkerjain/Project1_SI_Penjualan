@@ -21,6 +21,7 @@ Route::get('/index','indexController@index');
 
 //Barang
 Route::get('/dataBarang','barangContoller@index');
+Route::post('/tambahBarang','barangContoller@store');
 
 //Pegawai
 Route::get('/dataPegawai','pegawaiContoller@index');
