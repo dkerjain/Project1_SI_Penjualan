@@ -16,4 +16,8 @@ class penjualanContoller extends Controller
             return view ('konten/transaksi/penjualan');
         }
     }
+
+    public function input(){
+        return view ('konten/transaksi/inputPenjualan');
+    }
 }

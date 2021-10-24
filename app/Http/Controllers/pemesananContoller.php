@@ -16,4 +16,8 @@ class pemesananContoller extends Controller
             return view ('konten/transaksi/pemesanan');
         }
     }
+
+    public function input(){
+        return view ('konten/transaksi/inputPemesanan');
+    }
 }

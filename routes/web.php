@@ -43,6 +43,7 @@ Route::post('/editJabatan/{id}','jabatanContoller@edit');
 
 //Penjualan
 Route::get('/penjualan','penjualanContoller@index');
+Route::get('/inputPenjualan','penjualanContoller@input');
 
 //Pemeriksaan
 Route::get('/pemeriksaan','pemeriksaanContoller@index');

@@ -59,56 +59,7 @@
                         </div>
                         <!-- /.col -->
                     </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example1" class="table table-bordered table-hover">
-                  <thead>
-                  <tr>
-                    <th>ID Barang</th>
-                    <th>Kategori</th>
-                    <th>Nama Barang</th>
-                    <th>Harga Barang</th>
-                    <th>Stok</th>
-                    <th>Foto</th>
-                    <th>Deskripsi</th>
-                    <th >Action</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                        <!-- Code Menampilkan Data -->
-                        <td>BR01</td>
-                        <td>Kacamata</td>
-                        <td>Dior Eyeglasses</td>
-                        <td>Rp. 1.599.000</td>
-                        <td>10</td>
-                        <td>"Gambar"</td>
-                        <td>Kacamata kelas papan atas</td>
-                        <td style="text-align:center"><a href="" data-toggle="modal" data-target="#modal-edit"><i class="nav-icon fas fa-edit" ></i></a></td>
-                    </tr>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
-    </section>
-
-
-      <!-- /.modal Input-->
-        <div class="modal fade" id="modal-lg">
-            <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h4 class="modal-title">Tambah Data Barang</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                    <!-- /.row -->
                 </div>
                 <!-- /.container-fluid -->
             </div>

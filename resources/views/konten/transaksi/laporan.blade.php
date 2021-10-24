@@ -23,9 +23,6 @@
                     <div class="col-2">
                         <h3 class="card-title mt-3"><b>Filter Laporan</b></h3>
                     </div>
-                    <div class="col-2">
-                        <button  class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal-lg">Tambah Pembayaran</button>
-                    </div>
                     <div class="col-4 mt-2 ">
                         <!-- Date and time range -->
                         <div class="form-group">
@@ -39,7 +36,6 @@
                             </div>
                         </div>
                     </div>
-                    
               </div>
               <!-- /.card-header -->
               <div class="card-body">
