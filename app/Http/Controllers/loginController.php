@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-
+  
 class loginController extends Controller
 {
     /**
@@ -31,7 +31,7 @@ class loginController extends Controller
         $pegawai = DB::table('pegawai')
         ->join('jabatan', 'jabatan.id_jabatan', '=', 'pegawai.id_jabatan')
         ->where('username', $username)->first();
-        if($pegawai){
+        if($pegawai){ 
             if($pegawai->pasword == $pasword){
                 Session::put('id_pegawai', $pegawai->id_pegawai);
                 Session::put('nama_pegawai', $pegawai->nama_pegawai);
