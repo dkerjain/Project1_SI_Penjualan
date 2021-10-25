@@ -20,7 +20,7 @@
                         <h3 class="card-title mt-3"><b>Data Pembayaran</b></h3>
                     </div>
                     <div class="col-2">
-                        <button  class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal-lg">Tambah Pembayaran</button>
+                        <a href="/pemesanan"><button  class="btn btn-primary btn-block">Tambah Pembayaran</button></a>
                     </div>
               </div>
               <!-- /.card-header -->

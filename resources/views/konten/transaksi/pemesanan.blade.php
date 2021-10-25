@@ -146,7 +146,6 @@
                 <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-success">Tambah Pembayaran</button>
-                <button type="button" class="btn btn-primary">Simpan</button>
                 </div>
             </div>
             <!-- /.modal-content -->
