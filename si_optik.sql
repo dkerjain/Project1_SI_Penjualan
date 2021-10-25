@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2021 at 07:17 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.2
+-- Generation Time: Oct 25, 2021 at 07:40 PM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -73,6 +73,14 @@ CREATE TABLE `detail_penjualan` (
   `jumlah_pembelian` int(11) DEFAULT NULL,
   `sub_total_harga` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `detail_penjualan`
+--
+
+INSERT INTO `detail_penjualan` (`id_penjualan`, `id_barang`, `jumlah_pembelian`, `sub_total_harga`) VALUES
+('21102501', 'B001', 1, 10000),
+('21102501', 'B002', 2, 300000);
 
 -- --------------------------------------------------------
 
@@ -153,6 +161,13 @@ CREATE TABLE `pembayaran` (
   `jumlah_bayar` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `pembayaran`
+--
+
+INSERT INTO `pembayaran` (`id_pembayaran`, `id_pegawai`, `id_pemesanan`, `id_penjualan`, `tanggal_pembayaran`, `total_bayar`, `jumlah_bayar`) VALUES
+('21102501', 'P001', NULL, '21102501', '2021-10-25 05:24:51', 310000, 310000);
+
 -- --------------------------------------------------------
 
 --
@@ -197,6 +212,13 @@ CREATE TABLE `penjualan` (
   `tanggal_penjualan` datetime DEFAULT NULL,
   `total_harga` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `penjualan`
+--
+
+INSERT INTO `penjualan` (`id_penjualan`, `id_pegawai`, `tanggal_penjualan`, `total_harga`) VALUES
+('21102501', 'P001', '2021-10-25 05:24:51', 310000);
 
 --
 -- Indexes for dumped tables
