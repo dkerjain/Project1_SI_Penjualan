@@ -155,7 +155,7 @@
                     <th>Kategori</th>
                     <th>Barang</th>
                     <th>Harga</th>
-                    <th>Stok</th>
+                    <th>Foto</th>
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -170,7 +170,11 @@
                         @endforeach
                         <td>{{ $b->nama_barang }}</td>
                         <td>{{ number_format($b->harga_barang) }}</td>
-                        <td>{{ $b->stok_barang }}</td>
+                        @if($b->foto_barang != null)
+                            <td><center><img src="{{ asset($b->foto_barang) }}" style="width:100px; height:100px;"></center></td>
+                        @else
+                            <td>Tidak ada foto</td>
+                        @endif
                         <td><button class="btn btn-primary btn-block" onclick="pilihBarang('{{ $b->id_barang }}')">Add</button></td>
                     </tr>
                     @endforeach
