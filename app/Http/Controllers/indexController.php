@@ -13,7 +13,7 @@ class indexController extends Controller
         if(!Session::get('/Login')){
             return redirect('/');
         }else{
-            return view ('layout/index');
+            return view ('konten/dashboard');
         }
     }
 }
