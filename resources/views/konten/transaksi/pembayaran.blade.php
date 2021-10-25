@@ -38,26 +38,30 @@
                   </tr>
                   </thead>
                   <tbody>
+                    @foreach($pembayaran as $pb)
                     <tr>
                         <!-- Code Menampilkan Data -->
-                        <td>211021001</td>
-                        <td>211021001</td>
-                        <td>-</td>
-                        <td>21 Oktober 2021</td>
-                        <td>Admin</td>
-                        <td>Rp. 250.000</td>
-                        <td>Rp. 250.000</td>
+                        <td>{{ $pb->id_pembayaran }}</td>
+                        @if($pb->id_penjualan != null)
+                          <td>{{ $pb->id_penjualan }}</td>
+                        @else
+                          <td>-</td>
+                        @endif
+                        @if($pb->id_pemesanan != null)
+                          <td>{{ $pb->id_pemesanan }}</td>
+                        @else
+                          <td>-</td>
+                        @endif
+                        <td>{{ \Carbon\Carbon::parse($pb->tanggal_pembayaran)->translatedFormat('d M Y') }}</td>
+                        @foreach($pegawai as $peg)
+                          @if($pb->id_pegawai == $peg->id_pegawai)
+                            <td>{{ $peg->nama_pegawai }}</td>
+                          @endif
+                        @endforeach
+                        <td>{{ $pb->jumlah_bayar }}</td>
+                        <td>{{ $pb->total_bayar }}</td>
                     </tr>
-                    <tr>
-                        <!-- Code Menampilkan Data -->
-                        <td>211021001</td>
-                        <td>-</td>
-                        <td>211021001</td>
-                        <td>21 Oktober 2021</td>
-                        <td>Admin</td>
-                        <td>Rp. 150.000</td>
-                        <td>Rp. 350.000</td>
-                    </tr>
+                    @endforeach
                 </table>
               </div>
               <!-- /.card-body -->
