@@ -47,6 +47,8 @@ Route::get('/inputPenjualan','penjualanContoller@input');
 
 //Pemeriksaan
 Route::get('/pemeriksaan','pemeriksaanContoller@index');
+Route::post('/pemeriksaan/insert','pemeriksaanContoller@insert');
+Route::post('/pemeriksaan/edit','pemeriksaanContoller@update');
 
 //Pemesanan
 Route::get('/pemesanan','pemesananContoller@index');

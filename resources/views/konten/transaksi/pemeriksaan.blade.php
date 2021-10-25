@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="{{ asset('../../asset/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('../../asset/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('../../asset/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 @endsection
 
 @section('konten')
@@ -35,13 +36,15 @@
                   </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                        <!-- Code Menampilkan Data -->
-                        <td>211021001</td>
-                        <td>21 Oktober 2021</td>
-                        <td>kanan : -1 ; Kiri : -1,25</td>
-                        <td style="text-align:center"><a href="" data-toggle="modal" data-target="#modal-edit"><i class="nav-icon fas fa-edit" ></i></a></td>
-                    </tr>
+                    @foreach($pemeriksaan as $p)
+                      <tr>
+                          <!-- Code Menampilkan Data -->
+                          <td>{{$p->id_pemeriksaan}}</td>
+                          <td>{{\Carbon\Carbon::parse($p->tanggal_pemeriksaan)->translatedFormat('l, d F Y')}}</td>
+                          <td>{{$p->hasil_pemeriksaan}}</td>
+                          <td style="text-align:center" data-toggle="modal" data-target=".editpemeriksaan{{$p->id_pemeriksaan}}"><i class="nav-icon fas fa-edit" ></i></td>
+                      </tr>
+                    @endforeach
                 </table>
               </div>
               <!-- /.card-body -->
@@ -54,31 +57,34 @@
       <!-- /.container-fluid -->
     </section>
 
-    <!-- /.modal Input-->
-    <div class="modal fade" id="modal-lg">
+      <!-- /.modal Input-->
+        <div class="modal fade" id="modal-lg">
             <div class="modal-dialog modal-md">
             <div class="modal-content">
-                <div class="modal-header">
+              <div class="modal-header">
                 <h4 class="modal-title">Tambah Data Pemeriksaan</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                </div>
-                <div class="modal-body">
-
-                <!-- form start -->
-                <form>
-                        
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Hasil Pemeriksaan</label>
-                        <textarea type="text" class="form-control" id="exampleInputPassword1"></textarea>
-                    </div>
+              </div>
+              <!-- form start -->
+              <form action="/pemeriksaan/insert" method="post" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
+                {{ @csrf_field() }}
+                <div class="modal-body">  
+                  <div class="form-group">
+                      <label for="exampleInputPassword1">Tanggal Pemeriksaan</label>
+                      <input type="date" class="form-control" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}" id="tgl_pemeriksaan" name="tgl_pemeriksaan">
+                  </div> 
+                  <div class="form-group">
+                      <label for="exampleInputPassword1">Hasil Pemeriksaan</label>
+                      <textarea type="text" class="form-control" id="hasil_pemeriksaan" name="hasil_pemeriksaan"></textarea>
+                  </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Simpan</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
-                </form>
+              </form>
             </div>
             <!-- /.modal-content -->
             </div>
@@ -87,35 +93,37 @@
       <!-- /.modal -->
 
       <!-- /.modal Edit-->
-      <div class="modal fade" id="modal-edit">
-      <div class="modal-dialog modal-md">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h4 class="modal-title">Edit Data Jabatan</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-
-                <!-- form start -->
-                <form>
-                        
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Hasil Pemeriksaan</label>
-                        <textarea type="text" class="form-control" id="exampleInputPassword1"></textarea>
+        @foreach ($pemeriksaan as $p)
+          <div class="modal fade editpemeriksaan{{$p->id_pemeriksaan}}">
+            <div class="modal-dialog modal-md">
+              <div class="modal-content">
+                  <div class="modal-header">
+                  <h4 class="modal-title">Edit Data Pemeriksaan</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+                  </div>
+                  <!-- form start -->
+                  <form action="/pemeriksaan/edit" enctype="multipart/form-data" method="post" class="form-horizontal form-label-left">
+                    <div class="modal-body">
+                    {{ @csrf_field() }}  
+                      <input type="hidden" id="id_pemeriksaan" name="id_pemeriksaan" value="{{$p->id_pemeriksaan}}" class="form-control col-md-7 col-xs-12">
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">Hasil Pemeriksaan</label>
+                          <textarea type="text" class="form-control" id="hasil_pemeriksaa" name="hasil_pemeriksaan" value="{{$p->hasil_pemeriksaan}}"></textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Simpan</button>
-                </div>
-                </form>
-            </div>
-            <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
+                    <div class="modal-footer justify-content-between">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                  </form>
+              </div>
+              <!-- /.modal-content -->
+              </div>
+              <!-- /.modal-dialog -->
+          </div>
+        @endforeach
       <!-- /.modal -->
 
 @endsection
@@ -151,5 +159,29 @@
     });
   });
 </script>
+
+@if (session('success'))
+  <script>
+      Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Data Pemeriksaan Berhasil Disimpan',
+          showConfirmButton: false,
+          timer: 2000
+      }); 
+  </script>
+@endif
+
+@if (session('update'))
+  <script>
+      Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Data Pemeriksaan Berhasil Diupdate',
+          showConfirmButton: false,
+          timer: 2000
+      }); 
+  </script>
+@endif
 
 @endsection
