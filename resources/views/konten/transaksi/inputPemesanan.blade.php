@@ -8,6 +8,7 @@
   <!-- Select2 -->
   <link rel="stylesheet" href="{{ asset('../../asset/plugins/select2/css/select2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('../../asset/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 
 @section('konten')
@@ -31,7 +32,7 @@
                         <h3 class="card-title">Tanggal</h3>
                     </div>
                         <div class="input-group date p-3" id="reservationdate" data-target-input="nearest">
-                        <input type="date" class="form-control datetimepicker-input disabled" data-target="#reservationdate"/>
+                        <input type="date" class="form-control datetimepicker-input disabled" id="tgl_pemesanan" name="tgl_pemesanan" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}" data-target="#reservationdate"/>
                     </div>
                         
                 </div>
@@ -44,7 +45,7 @@
                 </div>
 
                 <div class="card-body">
-                    <input type="text" class="form-control" readonly value="Admin"/>
+                    <input type="text" name="pegawai" id="pegawai" class="form-control" readonly value="{{ Session::get('nama_pegawai') }}"/>
                 </div>
                 <!-- /.card-body -->
                 </div>
@@ -59,52 +60,41 @@
                 <div class="card">
                     <div class="row">
                         <div class="col-md-6">
-                        <div class="p-3">
-                        <label>Input Pemeriksaan</label>
-                        <select class="form-control select2" style="width: 100%;">
-                            <option>Alaska</option>
-                            <option>California</option>
-                            <option>Delaware</option>
-                            <option>Tennessee</option>
-                            <option>Texas</option>
-                            <option>Washington</option>
-                        </select>
-                        </div>
+                            <div class="p-3">
+                                <label>Input Pemeriksaan</label>
+                                <select class="form-control select2" name="pemeriksaan" id="pemeriksaan">
+                                    <option selected>Pilih ID Pemeriksaan</option>
+                                    @foreach($pemeriksaan as $p)
+                                    <option value="{{$p->id_pemeriksaan}}">{{$p->id_pemeriksaan}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
                         <div class="col-md-6">
-                                <div class="pt-5">
-                                <button  class="btn btn-info btn-block" data-toggle="modal" data-target="#modal-lg">Tambah Barang</button>
-                                </div>              
+                            <div class="pt-5 p-3">
+                                <button  class="btn btn-info btn-block" data-toggle="modal" data-target=".tambahbarang">Tambah Barang</button>
+                            </div>              
                         </div>
 
                         
                     </div>
                     
                     <div class="p-3">
-                    <table id="example2" class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th>Barang</th>
-                        <th>Harga Barang</th>
-                        <th>Ukuran Lensa</th>
-                        <th>Jenis Lensa</th>
-                        <th>Jumlah</th>
-                        <th>Harga Lensa</th>
-                        <th>Sub Total</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <!-- Code Menampilkan Data -->
-                            <td>Kacamata</td>
-                            <td>Rp. 250.000</td>
-                            <td><input type="text" class="form-control"  value="L: -2 ; R: -1"/></td>
-                            <td><input type="text" class="form-control"  value="Mika"/></td>
-                            <td><input type="Number" class="form-control"  value="2"/></td>
-                            <td><input type="text" class="form-control"  value="Rp. 100.000"/></td>
-                            <td>Rp. 450.000</td>
-                        </tr>
+                    <table id="keranjang" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Barang</th>
+                                <th>Harga Barang</th>
+                                <th>Ukuran Lensa</th>
+                                <th>Jenis Lensa</th>
+                                <th>Jumlah</th>
+                                <th>Harga Lensa</th>
+                                <th>Sub Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
                     </table>
                     </div>
                 </div>
@@ -153,60 +143,54 @@
     </div>
 </section>
 
-      <!-- /.modal barang-->
-      <div class="modal fade" id="modal-lg">
-      <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h4 class="modal-title">Data Barang</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+    <!-- /.modal barang-->
+        <div class="modal fade tambahbarang" id="modal-lg">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h4 class="modal-title">Data Barang</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    
+                    <table id="example1" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kategori</th>
+                                <th>Barang</th>
+                                <th>Harga</th>
+                                <th>Stok</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($barang as $b)
+                            <tr>
+                                <!-- Code Menampilkan Data -->
+                                <td>{{$loop->iteration}}</td>
+                                <td>{{$b->jenis_kategori}}</td>
+                                <td>{{$b->nama_barang}}</td>
+                                <td>Rp {{ number_format($p->harga_barang,2,',','.') }}</td>
+                                <td>{{$b->stok_barang}}</td>
+                                <td><button class="btn btn-primary btn-block">Add</button></td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                
-                <table id="example1" class="table table-bordered table-hover">
-                  <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>Kategori</th>
-                    <th>Barang</th>
-                    <th>Harga</th>
-                    <th>Stok</th>
-                    <th>Action</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                        <!-- Code Menampilkan Data -->
-                        <td>1</td>
-                        <td>Lensa</td>
-                        <td>Photocromic</td>
-                        <td>Rp. 250.000</td>
-                        <td>10</td>
-                        <td><button class="btn btn-primary btn-block">Add</button></td>
-                    </tr>
-                    <tr>
-                        <!-- Code Menampilkan Data -->
-                        <td>2</td>
-                        <td>Frame</td>
-                        <td>Kacamata Hitam</td>
-                        <td>Rp. 250.000</td>
-                        <td>5</td>
-                        <td><button class="btn btn-primary btn-block">Add</button></td>
-                    </tr>
-                </table>
-                
-                </div>
-                <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
+                <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
         </div>
-      <!-- /.modal -->
+    <!-- /.modal -->
 @endsection
 
 
@@ -230,6 +214,15 @@
 <script src="{{ asset('../../plugins/moment/moment.min.js') }}"></script>
 <script src="{{ asset('../../plugins/inputmask/jquery.inputmask.min.js') }}"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+
+$(document).ready(function() {
+    $('.select2').select2();
+});
+  
+</script>
+
 <script>
   $(function () {
     $("#example1").DataTable({
@@ -252,13 +245,13 @@
 <script>
     $(function () {
 
-    //Initialize Select2 Elements
-    $('.select2').select2()
+    // //Initialize Select2 Elements
+    // $('.select2').select2()
 
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    })
+    // //Initialize Select2 Elements
+    // $('.select2bs4').select2({
+    //   theme: 'bootstrap4'
+    // })
     
     //Datemask dd/mm/yyyy
     $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
