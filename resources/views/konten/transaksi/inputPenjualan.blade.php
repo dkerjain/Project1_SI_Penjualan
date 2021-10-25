@@ -22,6 +22,8 @@
 
 <section class="content">
     <div class="container-fluid">
+        <form method="post" action="/inputPenjualan/submit">
+        @csrf
         <!-- Tanggal dan Pegawai -->
         <div class="row">
             <div class="col-md-6">
@@ -43,7 +45,10 @@
                 </div>
 
                 <div class="card-body">
-                    <input type="text" class="form-control" readonly value="Admin"/>
+                    @if(\Session::has('/Login'))
+                        <input type="hidden" name="userid" value="{{ Session::get('id_pegawai') }}" class="form-control">
+                        <input type="text" name="user" value="{{ Session::get('nama_pegawai') }}" class="form-control" readonly>
+                    @endif
                 </div>
                 <!-- /.card-body -->
                 </div>
@@ -64,7 +69,7 @@
 
                         <div class="col-md-4">
                                 <div class="pt-3">
-                                <button  class="btn btn-info btn-block" data-toggle="modal" data-target="#modal-lg">Tambah Barang</button>
+                                <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#modal-lg">Tambah Barang</button>
                                 </div>              
                         </div>
 
@@ -73,25 +78,16 @@
                     </div>
                     
                     <div class="p-3">
-                    <table id="example2" class="table table-bordered table-hover">
+                    <table id="keranjang" class="table table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th>No</th>
                         <th>Barang</th>
                         <th>Harga</th>
                         <th>Jumlah</th>
                         <th>Sub Total</th>
+                        <th>Aksi</th>
                     </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <!-- Code Menampilkan Data -->
-                            <td>1</td>
-                            <td>Kacamata</td>
-                            <td>Rp. 250.000</td>
-                            <td>2</td>
-                            <td>Rp. 500.000</td>
-                        </tr>
                     </table>
                     </div>
                 </div>
@@ -119,18 +115,18 @@
                 <div class="card">
                     <div class="p-2">
                         <label>Total :</label>
-                        <input type="text" class="form-control" readonly value="Rp. 500.000"/>
+                        <input type="text" class="form-control" name="total" id="total" readonly/>
                     </div>                     
                     <div class="p-2">
                         <label>Bayar :</label>
-                        <input type="text" class="form-control"  value="Rp. 500.000"/>
+                        <input type="text" class="form-control" id="totalpayment" oninput="kembali()"/>
                     </div>                     
                     <div class="p-2">
                         <label>Kembalian :</label>
-                        <input type="text" class="form-control" readonly value="Rp. 0"/>
+                        <input type="text" class="form-control" id="kembalian" readonly />
                     </div>          
                     <div class="p-2">
-                    <button  class="btn btn-success btn-block">Tambah Penjualan</button>  
+                    <input class="btn btn-success btn-block" type="submit" value="Tambah Penjualan">
                     </div>                    
                     </div> 
                 </div>                
@@ -138,6 +134,7 @@
         </div>
 
     </div>
+    </form>
 </section>
 
       <!-- /.modal barang-->
@@ -155,7 +152,6 @@
                 <table id="example1" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>No</th>
                     <th>Kategori</th>
                     <th>Barang</th>
                     <th>Harga</th>
@@ -164,24 +160,20 @@
                   </tr>
                   </thead>
                   <tbody>
+                    @foreach($barang as $b)
                     <tr>
                         <!-- Code Menampilkan Data -->
-                        <td>1</td>
-                        <td>Lensa</td>
-                        <td>Photocromic</td>
-                        <td>Rp. 250.000</td>
-                        <td>10</td>
-                        <td><button class="btn btn-primary btn-block">Add</button></td>
+                        @foreach($kategori as $k)
+                            @if($b->id_kategori == $k->id_kategori)
+                                <td>{{ $k->jenis_kategori }}</td>
+                            @endif
+                        @endforeach
+                        <td>{{ $b->nama_barang }}</td>
+                        <td>{{ number_format($b->harga_barang) }}</td>
+                        <td>{{ $b->stok_barang }}</td>
+                        <td><button class="btn btn-primary btn-block" onclick="pilihBarang('{{ $b->id_barang }}')">Add</button></td>
                     </tr>
-                    <tr>
-                        <!-- Code Menampilkan Data -->
-                        <td>2</td>
-                        <td>Frame</td>
-                        <td>Kacamata Hitam</td>
-                        <td>Rp. 250.000</td>
-                        <td>5</td>
-                        <td><button class="btn btn-primary btn-block">Add</button></td>
-                    </tr>
+                    @endforeach
                 </table>
                 
                 </div>
@@ -194,6 +186,7 @@
             <!-- /.modal-dialog -->
         </div>
       <!-- /.modal -->
+      
 @endsection
 
 
@@ -234,6 +227,131 @@
   });
 
   
+</script>
+
+<script>
+	var barang = <?php echo json_encode($barang); ?>;
+	console.log(barang[0]["nama_barang"]);
+	var colnum=0;
+
+	function getVal(event){
+		if (event.keyCode === 13) {
+			modal();
+		}
+	}
+
+	function pilihBarang(id){
+		var index;
+		for(var i=0;i<barang.length;i++){
+			if(barang[i]["id_barang"]==id){
+				console.log(barang[i]);
+				index=i;
+				break;
+			}
+		}
+		jQuery("#modal-lg").modal("hide");
+
+		var table = document.getElementById("keranjang");
+
+        var flag=-1;
+
+        for(var z=1; z<table.rows.length; z++)
+        {
+            var x=table.rows[z].childNodes[0].childNodes[0];
+            console.log(x.value);
+            if(x.value == barang[index]["id_barang"])
+            {
+            flag = z;
+            break;
+            }
+        }
+
+        if(flag != -1)
+        {
+            var colQty = table.rows[flag].childNodes[2].childNodes[0];
+            colQty.value = parseInt(colQty.value) + 1;
+            var idrow = table.rows[flag].childNodes[0].childNodes[0].value;
+            console.log(idrow);
+            recount(idrow);
+        }
+        else
+        {
+		var row = table.insertRow(table.rows.length);
+		row.setAttribute('id','col'+colnum);
+		var id = 'col'+colnum;
+		colnum++;
+
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var cell3 = row.insertCell(2);
+		var cell4 = row.insertCell(3);
+		var cell5 = row.insertCell(4);
+		console.log(index);
+		cell1.innerHTML = '<input type="hidden" name="id['+barang[index]["id_barang"]+']" value="'+barang[index]["id_barang"]+'">'+barang[index]["nama_barang"];
+		cell2.innerHTML = '<input type="number" id="harga'+barang[index]["id_barang"]+'" name="harga['+barang[index]["id_barang"]+']" value="'+barang[index]["harga_barang"]+'" oninput="recount(\''+barang[index]["id_barang"]+'\')" style="background:transparent; border:none; text-align:left; width=100%">';
+		cell3.innerHTML = '<input type="number" name="qty['+barang[index]["id_barang"]+']" value="1" oninput="recount(\''+barang[index]["id_barang"]+'\')" id="qty'+barang[index]["id_barang"]+'" style="background:transparent; border:none; text-align:left; width=100%">';	
+		cell4.innerHTML = '<input type="hidden" class="subtotal" name="subtotal['+barang[index]["id_barang"]+']" value="'+barang[index]["harga_barang"]+'" id="subtotal'+barang[index]["id_barang"]+'"><span id="subtotalval'+barang[index]["id_barang"]+'">'+barang[index]["harga_barang"]+'</span>';
+		cell5.innerHTML = '<i class="icon-copy fa fa-trash" onclick="hapusEl(\''+id+'\')" style="cursor:pointer"> Del</i>';
+
+		total();
+        }
+		
+	}
+	function lm(i){
+		var min =  document.getElementById("qty"+i).value;
+		if(min <= 1){
+
+		}else{
+		min--;
+		document.getElementById("qty"+i).value = min;
+		recount(i);
+		}
+	}
+	function ln(i){
+		var plus =  document.getElementById("qty"+i).value;
+		console.log(plus);
+		plus++;
+		document.getElementById("qty"+i).value = plus;
+		console.log(plus);
+		recount(i);
+	}
+	function total(){
+		var subtotals = document.getElementsByClassName("subtotal");
+		var total = 0;
+		for(var i=0; i<subtotals.length;++i){
+			total += Number(subtotals[i].value); 
+		}
+		document.getElementById("total").value = total;
+        document.getElementById("totalpayment").value = total;
+        document.getElementById("kembalian").value = total-total; 
+	}
+
+    function kembali(){
+        var total = document.getElementById("total").value;
+        var bayar = document.getElementById("totalpayment").value;
+        document.getElementById("kembalian").value = bayar-total; 
+    }
+
+	function recount(id){
+		var price = document.getElementById("harga"+id).value;
+		var sembarang = document.getElementById("qty"+id).value;
+
+		var lego = Number(price*sembarang); 
+		document.getElementById("subtotal"+id).value = lego;
+		document.getElementById("subtotalval"+id).innerHTML = lego;
+		total();
+	}
+
+	function modal(){
+		$("#myModal").modal("show");
+		document.getElementById("myText").value = "";
+	}
+	function hapusEl(idCol) {
+		document.getElementById(idCol).remove();
+		total();
+	}
+
+
 </script>
 
 <script>
