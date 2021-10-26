@@ -110,14 +110,14 @@
           </li>
           <li class="nav-header">Akun</li>
           <li class="nav-item">
-            <a href="/" class="nav-link btn-info">
-              <i class="nav-icon fas fa-key"></i>
-              <p>Edit Password</p>
+            <a href="/profile" class="nav-link btn-info">
+              <i class="nav-icon fas fa-user"></i>
+              <p>Edit Profile</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="/logoutCek" class="nav-link btn-secondary">
-              <i class="nav-icon fas fa-ellipsis-h"></i>
+              <i class="nav-icon fas fa-power-off"></i>
               <p>Logout Akun</p>
             </a>
           </li>

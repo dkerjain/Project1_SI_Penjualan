@@ -20,6 +20,8 @@ Route::post('/loginCek','loginController@loginCek');
 Route::get('/logoutCek','loginController@logoutCek');
 
 Route::get('/index','indexController@index');
+Route::get('/profile','indexController@profile');
+Route::post('/editProfile','indexController@editProfile');
 
 //Barang
 Route::get('/dataBarang','barangContoller@index');
