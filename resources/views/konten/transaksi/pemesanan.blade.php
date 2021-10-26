@@ -166,11 +166,10 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      @if($p->status_pembayaran=0)
+                      @if($p->status_pembayaran = 1)
                         <button type="submit" class="btn btn-success">Tambah Pembayaran</button>
-                      @else
-                        <button type="submit" class="btn btn-success" disabled>Tambah Pembayaran</button>
                       @endif
+                      
                     </div>
                   </form>
               </div>
