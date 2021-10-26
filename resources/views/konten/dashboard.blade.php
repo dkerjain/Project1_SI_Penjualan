@@ -23,7 +23,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3>{{ number_format($totalpenjualan) }}</h3>
 
                 <p>Total Penjualan</p>
               </div>
@@ -38,7 +38,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px"></sup></h3>
+                <h3>{{ number_format($totalpemesanan) }}<sup style="font-size: 20px"></sup></h3>
 
                 <p>Total Pemesanan</p>
               </div>
@@ -53,7 +53,7 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>Rp. 400.000</h3>
+                <h3>Rp. {{ number_format($totalpiutang) }}</h3>
 
                 <p>Total Pemesanan Belum Lunas</p>
               </div>
@@ -68,7 +68,7 @@
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>Rp. 5.600.000</h3>
+                <h3>Rp. {{ number_format($totalpemasukan) }}</h3>
 
                 <p>Total Pemasukan Hari Ini</p>
               </div>
