@@ -18,7 +18,7 @@
               
             <div class="row">
                 <div class="col-10">
-                    <h3 class="card-title mt-3"><b>Data Pemeriksaan</b></h3>
+                    <h3 class="card-title mt-3"><b>Data Pemesanan</b></h3>
                 </div>
                 <div class="col-2">
                   <a href="/inputPemesanan"><button  class="btn btn-primary btn-block">Tambah Pemesanan</button></a>
@@ -34,12 +34,13 @@
                   <th>Tanggal Pesan</th>
                   <th>Pegawai</th>
                   <th>Nama Pelanggan</th>
+                  <th>Alamat Pelanggan</th>
+                  <th>No Telp Pelanggan</th>
                   <th>Total Biaya</th>
                   <th>Status Pemesanan</th>
                   <th>Status Pembayaran</th>
                   <th>Action</th>
-                  <th>Alamat Pelanggan</th>
-                  <th>No Telp Pelanggan</th>
+                  
                 </tr>
               </thead>
               <tbody>
@@ -110,21 +111,23 @@
             <div class="modal-body">
               {{ @csrf_field() }}
                 <input type="hidden" id="id_pemesanan" name="id_pemesanan" value="{{$p->id_pemesanan}}" class="form-control col-md-7 col-xs-12">
+                
                 <input type="hidden" id="total_bayar" name="total_bayar" value="{{$p->total_bayar}}" class="form-control col-md-7 col-xs-12">
                 <input type="hidden" id="jumlah" name="jumlah" value="{{$p->sisa}}" class="form-control col-md-7 col-xs-12">
-            
+                
+
               <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
                     <label>ID Pemesanan</label>
-                    <input type="text" class="form-control" placeholder="{{ $p->id_pemesanan}}" disabled>
+                    <input type="text" class="form-control" value="{{ $p->id_pemesanan}}" readonly>
                     </div>
                 </div>
 
                 <div class="col-sm-6">
                     <div class="form-group">
                     <label>Total</label>
-                    <input type="text" class="form-control" placeholder="Rp {{ number_format($p->total_biaya,2,',','.') }}" disabled>
+                    <input type="text" class="form-control" value="Rp {{ number_format($p->total_biaya,2,',','.') }}" readonly>
                     </div>
                 </div>
               </div>
@@ -156,26 +159,50 @@
                 </tbody>
               </table>
 
+              @if($p->status_pembayaran == 1)
               <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
                     <label>Jumlah Bayar</label>
-                    <input type="text" class="form-control" placeholder="Rp {{ number_format($p->jumlah_bayar,2,',','.') }}" >
+                    <input type="text" class="form-control" readonly value="Rp {{ number_format($p->jumlah_bayar,2,',','.') }}" >
                     </div>
                 </div>
 
                 <div class="col-sm-6">
                     <div class="form-group">
                     <label>Sisa Bayar</label>
-                    <input type="text" class="form-control" placeholder="Rp {{ number_format($p->sisa,2,',','.') }}" >
+                    <input type="text" class="form-control" readonly value="Rp {{ number_format($p->sisa,2,',','.') }}" >
                     </div>
                 </div>
               </div>
             </div>
+            @else
+              <div class="row">
+                  <div class="col-sm-6">
+                      <div class="form-group">
+                      <label>Jumlah Bayar</label>
+                      <input type="text" class="form-control" readonly value="Rp {{ number_format($p->total_bayar,2,',','.') }}" >
+                      </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                      <div class="form-group">
+                      <label>Sisa Bayar</label>
+                      <input type="text" class="form-control" readonly value="Rp 0,00" >
+                      </div>
+                  </div>
+                </div>
+              </div>
+            @endif
+
             <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              @if($p->status_pembayaran = 1)
+             
+              @if($p->status_pembayaran == 1)
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-success">Tambah Pembayaran</button>
+              @endif
+              @if($p->status_pembayaran == 0)
+                
               @endif
             </div>
             

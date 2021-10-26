@@ -26,6 +26,8 @@ class pemesananContoller extends Controller
             $pemesanan   = DB::table('pemesanan')->join('pegawai as p','pemesanan.id_pegawai','p.id_pegawai')
                            ->join('pembayaran as pb','pemesanan.id_pemesanan','pb.id_pemesanan')
                            ->join('pemeriksaan as pm','pemesanan.id_pemeriksaan','pm.id_pemeriksaan')
+                           ->select('pemesanan.*','p.*','pb.*','pm.*')
+                           ->groupBy('pb.id_pemesanan')
                            ->get();
             $detail      = DetailPemesanan::join('barang as b','detail_pemesanan.id_barang','b.id_barang')->get();
             return view ('konten/transaksi/pemesanan')->with(compact('pemeriksaan','pemesanan','detail'));
@@ -102,7 +104,7 @@ class pemesananContoller extends Controller
                     'id_pemesanan'          => $request->id_pemesanan,
                     'tanggal_pembayaran'    => $tgl,
                     'total_bayar'           => $request->total_bayar,
-                    'jumlah_bayar'          => $request->jumlah,
+                    'jumlah_bayar'          => $request->total_bayar,
                     'sisa'                  => 0
                 ]);
             }

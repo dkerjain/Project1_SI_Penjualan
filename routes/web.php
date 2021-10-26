@@ -64,3 +64,4 @@ Route::get('/pembayaran','pembayaranContoller@index');
 
 //Laporan
 Route::get('/laporan','laporanContoller@index');
+Route::get('/laporan/report','laporanContoller@report');

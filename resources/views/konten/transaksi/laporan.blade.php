@@ -32,9 +32,16 @@
                                     <i class="far fa-calendar-alt"></i>
                                 </span>
                                 </div>
-                                <input type="text" class="form-control float-right" id="reservation">
+                                <form action="/laporan/report" method="get">
+                                  <div class="input-prepend input-group">
+                                    <input type="text" name="date" class="form-control float-right" id="reservation">
+                                    <button class="btn btn-secondary" type="submit">Filter</button>
+                                  </div>
+                                </form>
                             </div>
                         </div>
+
+                        
                     </div>
               </div>
               <!-- /.card-header -->
@@ -127,12 +134,18 @@
   
 </script>
 
-<script>
-    $(function () {
-    //Date range picker
-    $('#reservation').daterangepicker()
-
-});
+<script type="text/javascript">
+  $(document).ready(function() {
+      let start = moment().startOf('month')
+      let end = moment().endOf('month')
+      
+      
+      $('#reservation').daterangepicker({
+          startDate: start,
+          endDate: end
+        }, function(first, last) {
+            })
+  })
 </script>
 
 
