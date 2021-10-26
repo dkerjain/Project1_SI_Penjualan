@@ -16,7 +16,7 @@ class pemeriksaanContoller extends Controller
         if(!Session::get('/Login')){
             return redirect('/');
         }else{
-            $pemeriksaan = Pemeriksaan::all();
+            $pemeriksaan = DB::table('pemeriksaan')->get();
             return view ('konten/transaksi/pemeriksaan',['pemeriksaan'=>$pemeriksaan]);
         }
     }
@@ -26,8 +26,11 @@ class pemeriksaanContoller extends Controller
             return redirect('/');
         }
         else{
-            Pemeriksaan::insert([
+            DB::table('pemeriksaan')->insert([
                 'tanggal_pemeriksaan'   => $request->tgl_pemeriksaan,
+                'nama_pelanggan'        => $request->nama,
+                'alamat_pelanggan'      => $request->alamat,
+                'no_telfon'             => $request->no_telfon,
                 'hasil_pemeriksaan'     => $request->hasil_pemeriksaan
             ]);
             return redirect('/pemeriksaan')->with('success','success');

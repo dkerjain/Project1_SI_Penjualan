@@ -76,6 +76,18 @@
                       <input type="date" class="form-control" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}" id="tgl_pemeriksaan" name="tgl_pemeriksaan">
                   </div> 
                   <div class="form-group">
+                      <label for="exampleInputPassword1">Nama Pelanggan</label>
+                      <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukan Nama Pelanggan">
+                  </div> 
+                  <div class="form-group">
+                      <label for="exampleInputPassword1">Alamat Pelanggan</label>
+                      <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukan Alamat Pelanggan">
+                  </div> 
+                  <div class="form-group">
+                      <label for="exampleInputPassword1">No Telfon Pelanggan</label>
+                      <input type="number" class="form-control" id="no_telfon" name="no_telfon" min="0" max="13" placeholder="085 xxx xxx xxx">
+                  </div> 
+                  <div class="form-group">
                       <label for="exampleInputPassword1">Hasil Pemeriksaan</label>
                       <textarea type="text" class="form-control" id="hasil_pemeriksaan" name="hasil_pemeriksaan"></textarea>
                   </div>
