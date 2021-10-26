@@ -15,7 +15,12 @@ class laporanContoller extends Controller
         if(!Session::get('/Login')){
             return redirect('/');
         }else{
-            return view ('konten/transaksi/laporan');
+            $penjualan = DB::table('penjualan')
+            ->join('pegawai', 'pegawai.id_pegawai', '=', 'penjualan.id_pegawai')
+            ->join('detail_penjualan', 'detail_penjualan.id_penjualan', '=', 'penjualan.id_penjualan')
+            ->join('barang', 'barang.id_barang', '=', 'detail_penjualan.id_barang')
+            ->get();
+            return view ('konten/transaksi/laporan', compact('penjualan'));
         }
     }
 

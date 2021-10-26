@@ -18,7 +18,7 @@
                   
                 <div class="row">
                     <div class="col-6">
-                        <h3 class="card-title mt-3"><b>Laporan</b></h3>
+                        <h3 class="card-title mt-3"><b>Laporan Penjualan</b></h3>
                     </div>
                     <div class="col-2">
                         <h3 class="card-title mt-3"><b>Filter Laporan</b></h3>
@@ -49,36 +49,24 @@
                 <table id="example1" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>ID Pembayaran</th>
-                    <th>Tanggal Pembayaran</th>
-                    <th>Pegawai</th>
-                    <th>Barang</th>
+                    <th>ID Penjualan</th>
+                    <th>Tanggal Penjualan</th>
+                    <th>Nama Barang</th>
+                    <th>Jumlah Pembelian</th>
                     <th>Harga</th>
-                    <th>Jumlah</th>
-                    <th>Sub Total</th>
                   </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                        <!-- Code Menampilkan Data -->
-                        <td>211021001</td>
-                        <td>21 Oktober 2021</td>
-                        <td>Admin</td>
-                        <td>Kacamata</td>
-                        <td>Rp. 250.000</td>
-                        <td>2</td>
-                        <td>Rp. 500.000</td>
-                    </tr>
-                    <tr>
-                        <!-- Code Menampilkan Data -->
-                        <td>211021001</td>
-                        <td>21 Oktober 2021</td>
-                        <td>Admin</td>
-                        <td>Kacamata</td>
-                        <td>Rp. 500.000</td>
-                        <td>1</td>
-                        <td>Rp. 500.000</td>
-                    </tr>
+                    @foreach($penjualan as $p)
+                      <tr>
+                          <td>{{ $p->id_penjualan }}</td>
+                          <td>{{ $p->tanggal_penjualan }}</td>
+                          <td>{{ $p->nama_barang }}</td>
+                          <td>{{ $p->jumlah_pembelian }}</td>
+                          <td>{{ $p->sub_total_harga }}</td>
+                      </tr>
+                    @endforeach
+                  </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
