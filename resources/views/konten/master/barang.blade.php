@@ -42,7 +42,7 @@
                                                     <td>{{ $b->id_barang }}</td>
                                                     <td>{{ $b->jenis_kategori }}</td>
                                                     <td>{{ $b->nama_barang }}</td>
-                                                    <td>{{ $b->harga_barang }}</td>
+                                                    <td>Rp.{{ number_format($b->harga_barang, 0, ',', '.') }}</td>
                                                     <td>{{ $b->stok_barang }}</td>
                                                     <td>{{ $b->deskripsi_barang }}</td>
                                                     <td style="text-align:center">
@@ -65,33 +65,34 @@
             </div>
         </section>
 
-    <!-- Modal Foto -->
-    @foreach($barang as $b)
-        <div class="modal fade" id="foto{{ $b->id_barang }}">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Foto Barang</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="item form-group" style="text-align:center;">
-                            @if($b->foto_barang != null)
-                                <img src="{{ asset($b->foto_barang) }}" style="width:250px; height:250px;">
-                            @else
-                                <h3>Tidak ada foto</h3>
-                            @endif
+    <!-- /.modal Foto -->
+        @foreach($barang as $b)
+            <div class="modal fade" id="foto{{ $b->id_barang }}">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Foto Barang</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary">Ok</button>
+                        <div class="modal-body">
+                            <div class="item form-group" style="text-align:center;">
+                                @if($b->foto_barang != null)
+                                    <img src="{{ asset($b->foto_barang) }}" style="width:250px; height:250px;">
+                                @else
+                                    <h3>Tidak ada foto</h3>
+                                @endif
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" class="btn btn-primary">Ok</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    @endforeach
+        @endforeach
+    <!-- /.modal -->
 
     <!-- /.modal Input-->
         <div class="modal fade" id="modal-lg">
