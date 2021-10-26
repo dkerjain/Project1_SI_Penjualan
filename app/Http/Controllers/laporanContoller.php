@@ -37,15 +37,17 @@ class laporanContoller extends Controller
             $end = Carbon::parse($date[1])->format('Y-m-d') . ' 23:59:59';
         }
 
-        $reward = Reward::join('jadwal_karyawan as jk','reward.ID_JADWAL','jk.ID_JADWAL')
-                          ->whereBetween('TGL_REWARD', [$start, $end])
-                          ->get();
-                            
+        $penjualan = DB::table('penjualan')
+            ->join('pegawai', 'pegawai.id_pegawai', '=', 'penjualan.id_pegawai')
+            ->join('detail_penjualan', 'detail_penjualan.id_penjualan', '=', 'penjualan.id_penjualan')
+            ->join('barang', 'barang.id_barang', '=', 'detail_penjualan.id_barang')
+            ->whereBetween('penjualan.tanggal_penjualan', [$start, $end])
+            ->get();
 
         // $user = DB::table('user')->get();
         // $pengeluaran_bulanan = DB::table('pengeluaran_bulanan')->whereBetween('TGL_PENGELUARAN', [$start, $end])->get();
         // $jenis_pengeluaran = DB::table('jenis_pengeluaran')->get();
 
-            return view('konten/transaksi/laporan')->with(compact('reward'));
+            return view('konten/transaksi/laporan')->with(compact('penjualan'));
     }
 }
