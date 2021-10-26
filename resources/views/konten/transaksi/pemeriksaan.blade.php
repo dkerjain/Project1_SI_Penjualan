@@ -10,52 +10,59 @@
 @section('konten')
 <br>
 <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                  
-                <div class="row">
-                    <div class="col-10">
-                        <h3 class="card-title mt-3"><b>Data Pemeriksaan</b></h3>
-                    </div>
-                    <div class="col-2">
-                        <button  class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal-lg">Tambah Pemeriksaan</button>
-                    </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example1" class="table table-bordered table-hover">
-                  <thead>
-                  <tr>
-                    <th>ID Pemeriksaan</th>
-                    <th>Tanggal Pemeriksaan</th>
-                    <th>Hasil</th>
-                    <th>Action</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($pemeriksaan as $p)
-                      <tr>
-                          <!-- Code Menampilkan Data -->
-                          <td>{{$p->id_pemeriksaan}}</td>
-                          <td>{{\Carbon\Carbon::parse($p->tanggal_pemeriksaan)->translatedFormat('l, d F Y')}}</td>
-                          <td>{{$p->hasil_pemeriksaan}}</td>
-                          <td style="text-align:center" data-toggle="modal" data-target=".editpemeriksaan{{$p->id_pemeriksaan}}"><i class="nav-icon fas fa-edit" ></i></td>
-                      </tr>
-                    @endforeach
-                </table>
-              </div>
-              <!-- /.card-body -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+              
+            <div class="row">
+                <div class="col-10">
+                    <h3 class="card-title mt-3"><b>Data Pemeriksaan</b></h3>
+                </div>
+                <div class="col-2">
+                    <button  class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal-lg">Tambah Pemeriksaan</button>
+                </div>
             </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table id="example1" class="table table-bordered table-hover">
+              <thead>
+              <tr>
+                <th>ID Pemeriksaan</th>
+                <th> Nama Pelanggan </th>
+                <th> Alamat Pelanggan </th>
+                <th> No Telfon </th>
+                <th>Tanggal Pemeriksaan</th>
+                <th>Hasil</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+                @foreach($pemeriksaan as $p)
+                  <tr>
+                      <!-- Code Menampilkan Data -->
+                      <td>{{$p->id_pemeriksaan}}</td>
+                      <td>{{$p->nama_pelanggan}}</td>
+                      <td> {{$p->alamat_pelanggan}}</td>
+                      <td> {{$p->no_telfon}}</td>
+                      <td>{{\Carbon\Carbon::parse($p->tanggal_pemeriksaan)->translatedFormat('l, d F Y')}}</td>
+                      <td>{{$p->hasil_pemeriksaan}}</td>
+                      <td style="text-align:center" data-toggle="modal" data-target=".editpemeriksaan{{$p->id_pemeriksaan}}"><i class="nav-icon fas fa-edit" ></i></td>
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
           </div>
-          <!-- /.col -->
+          <!-- /.card-body -->
         </div>
-        <!-- /.row -->
       </div>
-      <!-- /.container-fluid -->
-    </section>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
 
       <!-- /.modal Input-->
         <div class="modal fade" id="modal-lg">
@@ -85,7 +92,7 @@
                   </div> 
                   <div class="form-group">
                       <label for="exampleInputPassword1">No Telfon Pelanggan</label>
-                      <input type="number" class="form-control" id="no_telfon" name="no_telfon" min="0" max="13" placeholder="085 xxx xxx xxx">
+                      <input type="number" class="form-control" id="no_telfon" name="no_telfon" min="10" placeholder="085 xxx xxx xxx">
                   </div> 
                   <div class="form-group">
                       <label for="exampleInputPassword1">Hasil Pemeriksaan</label>
@@ -120,6 +127,22 @@
                     <div class="modal-body">
                     {{ @csrf_field() }}  
                       <input type="hidden" id="id_pemeriksaan" name="id_pemeriksaan" value="{{$p->id_pemeriksaan}}" class="form-control col-md-7 col-xs-12">
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">Tanggal Pemeriksaan</label>
+                          <input type="date" class="form-control" readonly value="{{\Carbon\Carbon::now()->format('Y-m-d')}}" id="tgl_pemeriksaan" name="tgl_pemeriksaan">
+                        </div> 
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Nama Pelanggan</label>
+                            <input type="text" class="form-control" readonly value="{{$p->nama_pelanggan}}" id="nama" name="nama">
+                        </div> 
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Alamat Pelanggan</label>
+                            <input type="text" class="form-control" readonly value="{{$p->alamat_pelanggan}}" id="alamat" name="alamat">
+                        </div> 
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">No Telfon Pelanggan</label>
+                            <input type="number" class="form-control" readonly id="no_telfon" name="no_telfon" min="10" value="{{$p->no_telfon}}">
+                        </div> 
                         <div class="form-group">
                           <label for="exampleInputPassword1">Hasil Pemeriksaan</label>
                           <textarea type="text" class="form-control" id="hasil_pemeriksaa" name="hasil_pemeriksaan" value="{{$p->hasil_pemeriksaan}}"></textarea>
