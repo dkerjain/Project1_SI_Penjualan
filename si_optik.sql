@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2021 at 07:40 PM
+-- Generation Time: Oct 25, 2021 at 08:04 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -42,8 +42,8 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`id_barang`, `id_kategori`, `nama_barang`, `harga_barang`, `stok_barang`, `foto_barang`, `deskripsi_barang`) VALUES
-('B001', 'K001', 'Kacamata 1', 10000, 10, '/Foto_Barang/1634976162-logo_himasi.png', 'adwd'),
-('B002', 'K002', 'Lensa 1', 150000, 15, '/Foto_Barang/1634974765-logo unair.png', 'ssvcs');
+('B001', 'K001', 'Kacamata 1', 10000, 9, '/Foto_Barang/1634976162-logo_himasi.png', 'adwd'),
+('B002', 'K002', 'Lensa 1', 150000, 14, '/Foto_Barang/1634974765-logo unair.png', 'ssvcs');
 
 -- --------------------------------------------------------
 
@@ -80,7 +80,19 @@ CREATE TABLE `detail_penjualan` (
 
 INSERT INTO `detail_penjualan` (`id_penjualan`, `id_barang`, `jumlah_pembelian`, `sub_total_harga`) VALUES
 ('21102501', 'B001', 1, 10000),
-('21102501', 'B002', 2, 300000);
+('21102501', 'B002', 2, 300000),
+('21102601', 'B001', 1, 10000),
+('21102601', 'B002', 1, 150000);
+
+--
+-- Triggers `detail_penjualan`
+--
+DELIMITER $$
+CREATE TRIGGER `update_stok` AFTER INSERT ON `detail_penjualan` FOR EACH ROW UPDATE barang
+SET stok_barang = stok_barang - NEW.jumlah_pembelian
+WHERE NEW.id_barang = id_barang
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -166,7 +178,8 @@ CREATE TABLE `pembayaran` (
 --
 
 INSERT INTO `pembayaran` (`id_pembayaran`, `id_pegawai`, `id_pemesanan`, `id_penjualan`, `tanggal_pembayaran`, `total_bayar`, `jumlah_bayar`) VALUES
-('21102501', 'P001', NULL, '21102501', '2021-10-25 05:24:51', 310000, 310000);
+('21102501', 'P001', NULL, '21102501', '2021-10-25 05:24:51', 310000, 310000),
+('21102601', 'P001', NULL, '21102601', '2021-10-26 01:03:51', 160000, 160000);
 
 -- --------------------------------------------------------
 
@@ -218,7 +231,8 @@ CREATE TABLE `penjualan` (
 --
 
 INSERT INTO `penjualan` (`id_penjualan`, `id_pegawai`, `tanggal_penjualan`, `total_harga`) VALUES
-('21102501', 'P001', '2021-10-25 05:24:51', 310000);
+('21102501', 'P001', '2021-10-25 05:24:51', 310000),
+('21102601', 'P001', '2021-10-26 01:03:51', 160000);
 
 --
 -- Indexes for dumped tables
