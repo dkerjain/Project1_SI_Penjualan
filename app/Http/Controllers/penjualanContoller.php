@@ -57,15 +57,8 @@ class penjualanContoller extends Controller
 		            'sub_total_harga'=> $request['subtotal'][$key]
 	            ]);
             }
-
-        $id = (DB::table('pembayaran')->whereBetween('tanggal_pembayaran', [$start, $end])->count('id_pembayaran'))+1;
-        $d = date('d');
-        $m = date('m');
-        $y = date('y');
-        $bayar_id = str_pad($y,2,"0",STR_PAD_LEFT).str_pad($m,2,"0",STR_PAD_LEFT).str_pad($d,2,"0",STR_PAD_LEFT).str_pad($id,2,"0",STR_PAD_LEFT);
             
             DB::table('pembayaran')->insert([
-                'id_pembayaran' => $bayar_id,
                 'id_pegawai' => $request->userid,
                 'id_penjualan' => $nota_id,
                 'tanggal_pembayaran' => $tgl,

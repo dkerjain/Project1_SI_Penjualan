@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="{{ asset('../../asset/plugins/select2/css/select2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('../../asset/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 @endsection
 
 @section('konten')
@@ -20,145 +21,141 @@
             <h1>Pemesanan</h1>
           </div>
       </div><!-- /.container-fluid -->
-</section>
+    </section>
 
 <section class="content">
-    <div class="container-fluid">
-        <!-- Tanggal dan Pegawai -->
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Tanggal</h3>
-                    </div>
+        <div class="container-fluid">
+        <form action="/pemesanan/inputPemesanan/submit" method="post" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
+        {{ @csrf_field() }}
+
+            <!-- Tanggal dan Pegawai -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Tanggal</h3>
+                        </div>
                         <div class="input-group date p-3" id="reservationdate" data-target-input="nearest">
-                        <input type="date" class="form-control datetimepicker-input disabled" id="tgl_pemesanan" name="tgl_pemesanan" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}" data-target="#reservationdate"/>
+                            <input type="date" class="form-control datetimepicker-input disabled" id="tgl_pemesanan" name="tgl_pemesanan" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}" data-target="#reservationdate"/>
+                        </div>     
                     </div>
-                        
                 </div>
+
+                <div class="col-md-6">
+                    <div class="card ">
+                        <div class="card-header">
+                            <h3 class="card-title">Pegawai</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <input type="text" name="pegawai" id="pegawai" class="form-control" readonly value="{{ Session::get('nama_pegawai') }}"/>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+
             </div>
+            
+            <!-- Tabel -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="p-3">
+                                    <label>Input Pemeriksaan</label>
+                                    <select class="form-control select2" name="pemeriksaan" id="pemeriksaan">
+                                        <option selected>Pilih ID Pemeriksaan</option>
+                                        @foreach($pemeriksaan as $p)
+                                        <option value="{{$p->id_pemeriksaan}}">{{$p->id_pemeriksaan}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
-            <div class="col-md-6">
-                <div class="card ">
-                <div class="card-header">
-                    <h3 class="card-title">Pegawai</h3>
-                </div>
-
-                <div class="card-body">
-                    <input type="text" name="pegawai" id="pegawai" class="form-control" readonly value="{{ Session::get('nama_pegawai') }}"/>
-                </div>
-                <!-- /.card-body -->
-                </div>
-            </div>
-
-        </div>
-        
-
-        <!-- Tabel -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="p-3">
-                                <label>Input Pemeriksaan</label>
-                                <select class="form-control select2" name="pemeriksaan" id="pemeriksaan">
-                                    <option selected>Pilih ID Pemeriksaan</option>
-                                    @foreach($pemeriksaan as $p)
-                                    <option value="{{$p->id_pemeriksaan}}">{{$p->id_pemeriksaan}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-md-6">
+                                <div class="pt-5 p-3">
+                                <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#modal-lg">Tambah Barang</button>
+                                </div>              
                             </div>
                         </div>
-
-                        <div class="col-md-6">
-                            <div class="pt-5 p-3">
-                                <button  class="btn btn-info btn-block" data-toggle="modal" data-target=".tambahbarang">Tambah Barang</button>
-                            </div>              
-                        </div>
-
                         
-                    </div>
-                    
-                    <div class="p-3">
-                    <table id="keranjang" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>Barang</th>
-                                <th>Harga Barang</th>
-                                <th>Ukuran Lensa</th>
-                                <th>Jenis Lensa</th>
-                                <th>Jumlah</th>
-                                <th>Harga Lensa</th>
-                                <th>Sub Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                        <div class="p-3">
+                            <table id="keranjang" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Barang</th>
+                                        <th>Harga Barang</th>
+                                        <th>Ukuran Lensa</th>
+                                        <th>Jenis Lensa</th>
+                                        <th>Jumlah</th>
+                                        <th>Harga Lensa</th>
+                                        <th>Sub Total</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Total -->
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card">
+            
+            <!-- Total -->
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-md-3">
-                <div class="card">
-                </div>                
-            </div>
+                <div class="col-md-3">
+                    <div class="card">
+                    </div>                
+                </div>
 
-            <div class="col-md-3">
-                <div class="card">
-                </div>                
-            </div>
+                <div class="col-md-3">
+                    <div class="card">
+                    </div>                
+                </div>
 
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="p-2">
-                        <label>Total :</label>
-                        <input type="text" class="form-control" readonly value="Rp. 500.000"/>
-                    </div>                     
-                    <div class="p-2">
-                        <label>Bayar :</label>
-                        <input type="text" class="form-control"  value="Rp. 500.000"/>
-                    </div>                     
-                    <div class="p-2">
-                        <label>Sisa Bayar :</label>
-                        <input type="text" class="form-control" readonly value="Rp. 0"/>
-                    </div>          
-                    <div class="p-2">
-                    <button  class="btn btn-success btn-block">Tambah Penjualan</button>  
-                    </div>                    
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="p-2">
+                            <label>Total :</label>
+                            <input type="text" class="form-control" name="total" id="total" readonly/>
+                        </div>                     
+                        <div class="p-2">
+                            <label>Bayar :</label>
+                            <input type="text" class="form-control" id="bayar" name="bayar" oninput="kembali()"/>
+                        </div>                      
+                        <div class="p-2">
+                            <label>Sisa Bayar :</label>
+                            <input type="text" class="form-control" value="0" min="0" name="sisa" readonly id="sisa"/>
+                        </div>          
+                        <div class="p-2">
+                            <button  class="btn btn-success btn-block" type="submit">Tambah Penjualan</button>  
+                        </div>                    
                     </div> 
                 </div>                
             </div>
+        </form>
         </div>
-
-    </div>
+    
 </section>
 
-    <!-- /.modal barang-->
-        <div class="modal fade tambahbarang" id="modal-lg">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
+<!-- /.modal barang-->
+    <div class="modal fade" id="modal-lg">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
                     <h4 class="modal-title">Data Barang</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    </div>
-                    <div class="modal-body">
-                    
+                </div>
+                <div class="modal-body">
+                
                     <table id="example1" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>No</th>
                                 <th>Kategori</th>
                                 <th>Barang</th>
                                 <th>Harga</th>
@@ -170,27 +167,26 @@
                             @foreach($barang as $b)
                             <tr>
                                 <!-- Code Menampilkan Data -->
-                                <td>{{$loop->iteration}}</td>
                                 <td>{{$b->jenis_kategori}}</td>
                                 <td>{{$b->nama_barang}}</td>
-                                <td>Rp {{ number_format($p->harga_barang,2,',','.') }}</td>
+                                <td>Rp {{ number_format($b->harga_barang,2,',','.') }}</td>
                                 <td>{{$b->stok_barang}}</td>
-                                <td><button class="btn btn-primary btn-block">Add</button></td>
+                                <td><button class="btn btn-primary btn-block" onclick="pilihBarang('{{ $b->id_barang }}')">Add</button></td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                     
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
                 </div>
-                <!-- /.modal-content -->
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <!-- /.modal-dialog -->
+                <!-- /.modal-content -->
         </div>
-    <!-- /.modal -->
+            <!-- /.modal-dialog -->
+    </div>
+<!-- /.modal -->
 @endsection
 
 
@@ -224,6 +220,145 @@ $(document).ready(function() {
 </script>
 
 <script>
+	var barang = <?php echo json_encode($barang); ?>;
+	console.log(barang[0]["nama_barang"]);
+	var colnum=0;
+
+	function getVal(event){
+		if (event.keyCode === 13) {
+			modal();
+		}
+	}
+
+	function pilihBarang(id){
+		var index;
+		for(var i=0;i<barang.length;i++){
+			if(barang[i]["id_barang"]==id){
+				console.log(barang[i]);
+				index=i;
+				break;
+			}
+		}
+		jQuery("#modal-lg").modal("hide");
+
+		var table = document.getElementById("keranjang");
+
+        var flag=-1;
+
+        for(var z=1; z<table.rows.length; z++)
+        {
+            var x=table.rows[z].childNodes[0].childNodes[0];
+            console.log(x.value);
+            if(x.value == barang[index]["id_barang"])
+            {
+            flag = z;
+            break;
+            }
+        }
+
+        if(flag != -1)
+        {
+            var colQty = table.rows[flag].childNodes[4].childNodes[0];
+            colQty.value = parseInt(colQty.value) + 1;
+            var idrow = table.rows[flag].childNodes[0].childNodes[0].value;
+            console.log(idrow);
+            recount(idrow);
+        }
+        else
+        {
+		var row = table.insertRow(table.rows.length);
+		row.setAttribute('id','col'+colnum);
+		var id = 'col'+colnum;
+		colnum++;
+
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var cell3 = row.insertCell(2);
+		var cell4 = row.insertCell(3);
+		var cell5 = row.insertCell(4);
+        var cell6 = row.insertCell(5);
+        var cell7 = row.insertCell(6);
+		console.log(index);
+
+		cell1.innerHTML = '<input type="hidden" name="id['+barang[index]["id_barang"]+']" value="'+barang[index]["id_barang"]+'">'+barang[index]["nama_barang"];
+
+		cell2.innerHTML = '<input type="number" readonly id="harga'+barang[index]["id_barang"]+'" name="harga['+barang[index]["id_barang"]+']" value="'+barang[index]["harga_barang"]+'" oninput="recount(\''+barang[index]["id_barang"]+'\')"style="background:transparent; border:none; text-align:left; width=100%">';
+
+        cell3.innerHTML = '<input type="number" id="ukuran_lensa'+barang[index]["id_barang"]+'" name="ukuran_lensa['+barang[index]["id_barang"]+']" oninput="recount(\''+barang[index]["id_barang"]+'\')">';
+
+        cell4.innerHTML = '<input type="text" id="jenis_lensa'+barang[index]["id_barang"]+'" name="jenis_lensa['+barang[index]["id_barang"]+']" oninput="recount(\''+barang[index]["id_barang"]+'\')">';
+
+		cell5.innerHTML = '<input type="number" name="qty['+barang[index]["id_barang"]+']" value="1" oninput="recount(\''+barang[index]["id_barang"]+'\')" id="qty'+barang[index]["id_barang"]+'" style="background:transparent; border:none; text-align:left; width=100%">';	
+
+		cell6.innerHTML = '<input type="hidden" class="subtotal" name="subtotal['+barang[index]["id_barang"]+']" value="'+barang[index]["harga_barang"]+'" id="subtotal'+barang[index]["id_barang"]+'"><span id="subtotalval'+barang[index]["id_barang"]+'">'+barang[index]["harga_barang"]+'</span>';
+
+		cell7.innerHTML = '<i class="icon-copy fa fa-trash" onclick="hapusEl(\''+id+'\')" style="cursor:pointer"> Del</i>';
+
+
+		total();
+        }
+		
+	}
+	function lm(i){
+		var min =  document.getElementById("qty"+i).value;
+		if(min <= 1){
+
+		}else{
+		min--;
+		document.getElementById("qty"+i).value = min;
+		recount(i);
+		}
+	}
+	function ln(i){
+		var plus =  document.getElementById("qty"+i).value;
+		console.log(plus);
+		plus++;
+		document.getElementById("qty"+i).value = plus;
+		console.log(plus);
+		recount(i);
+	}
+	function total(){
+		var subtotals = document.getElementsByClassName("subtotal");
+		var total = 0;
+		for(var i=0; i<subtotals.length;++i){
+			total += Number(subtotals[i].value); 
+		}
+		document.getElementById("total").value = total;
+	}
+
+    $("#bayar").keyup(function(){
+            $('#sisa').val(parseInt($("#total").val())-parseInt($('#bayar').val()));
+    });
+    function kembali(){
+
+        var total = document.getElementById("total").value;
+        var bayar = document.getElementById("bayar").value;
+        document.getElementById("sisa").value = bayar-total; 
+    }
+
+	function recount(id){
+		var price = document.getElementById("harga"+id).value;
+		var sembarang = document.getElementById("qty"+id).value;
+
+		var lego = Number(price*sembarang); 
+		document.getElementById("subtotal"+id).value = lego;
+		document.getElementById("subtotalval"+id).innerHTML = lego;
+		total();
+	}
+
+	function modal(){
+		$("#myModal").modal("show");
+		document.getElementById("myText").value = "";
+	}
+	function hapusEl(idCol) {
+		document.getElementById(idCol).remove();
+		total();
+	}
+
+
+</script>
+
+<script>
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false
@@ -245,13 +380,13 @@ $(document).ready(function() {
 <script>
     $(function () {
 
-    // //Initialize Select2 Elements
-    // $('.select2').select2()
+    //Initialize Select2 Elements
+    $('.select2').select2()
 
-    // //Initialize Select2 Elements
-    // $('.select2bs4').select2({
-    //   theme: 'bootstrap4'
-    // })
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
     
     //Datemask dd/mm/yyyy
     $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
@@ -298,6 +433,18 @@ $(document).ready(function() {
     })
 });
 </script>
+
+@if (session('success'))
+  <script>
+      Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Data Pemesanan Berhasil Disimpan',
+          showConfirmButton: false,
+          timer: 2000
+      }); 
+  </script>
+@endif
 
 
 

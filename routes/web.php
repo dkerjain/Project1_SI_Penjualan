@@ -54,6 +54,8 @@ Route::post('/pemeriksaan/edit','pemeriksaanContoller@update');
 //Pemesanan
 Route::get('/pemesanan','pemesananContoller@index');
 Route::get('/inputPemesanan','pemesananContoller@input');
+Route::post('/pemesanan/inputPemesanan/submit','pemesananContoller@store');
+Route::post('/pemesanan/tambahpembayaran','pemesananContoller@tambahpembayaran');
 
 //Pembayaran
 Route::get('/pembayaran','pembayaranContoller@index');
