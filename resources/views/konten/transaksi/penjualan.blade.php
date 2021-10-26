@@ -27,23 +27,105 @@
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-hover">
                   <thead>
-                  <tr>
-                    <th>ID Penjualan</th>
-                    <th>Tanggal Penjualan</th>
-                    <th>Pegawai</th>
-                    <th>Total Penjualan</th>
-                    <th>Action</th>
-                  </tr>
+                    <tr>
+                      <th>ID Penjualan</th>
+                      <th>Tanggal Penjualan</th>
+                      <th>Pegawai</th>
+                      <th>Total Penjualan</th>
+                      <th>Action</th>
+                    </tr>
                   </thead>
                   <tbody>
+                  @foreach($penjualan as $p)
                     <tr>
                         <!-- Code Menampilkan Data -->
-                        <td>211021001</td>
-                        <td>21 Oktober 2021</td>
-                        <td>Admin</td>
-                        <td>Rp. 250.000</td>
-                        <td style="text-align:center"><a href="" data-toggle="modal" data-target="#modal-edit"><i class="nav-icon fas fa-bars" ></i></a></td>
+                        <td>{{ $p->id_penjualan }}</td>
+                        <td>{{ \Carbon\Carbon::parse($p->tanggal_penjualan)->translatedFormat('d M Y ') }}</td>
+                        @foreach($pegawai as $peg)
+                          @if($p->id_pegawai == $peg->id_pegawai)
+                            <td>{{ $peg->nama_pegawai }}</td>
+                          @endif
+                        @endforeach
+                        <td>{{number_format($p->total_harga)}}</td>
+                        <td style="text-align:center">
+                          <a href="" data-toggle="modal" data-target="#modal-edit{{ $p->id_penjualan }}"><i class="nav-icon fas fa-bars" ></i></a>
+                          <!-- /.modal Edit-->
+                          <div class="modal fade" id="modal-edit{{ $p->id_penjualan }}">
+                          <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h4 class="modal-title">Detail Data Penjualan</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                          <div class="form-group">
+                                            <label>ID Penjualan</label>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                          <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="{{ $p->id_penjualan}}" disabled>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                          <div class="form-group">
+                                            <label>Total</label>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                          <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Rp. {{ number_format($p->total_harga) }}" disabled>
+                                          </div>
+                                        </div>
+                                    </div>
+
+                                    <table id="example2" class="table table-bordered table-hover">
+                                      <thead>
+                                      <tr>
+                                        <th>Barang</th>
+                                        <th>Jumlah</th>
+                                        <th>Sub Total</th>
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+                                        @foreach($detail_penjualan as $dp)
+                                          @if($p->id_penjualan == $dp->id_penjualan)
+                                          <tr>
+                                              <!-- Code Menampilkan Data -->
+                                              @foreach($barang as $b)
+                                                @if($b->id_barang == $dp->id_barang)
+                                                <td>{{ $b->nama_barang }}</td>
+                                                @endif
+                                              @endforeach
+                                              <td>{{ $dp->jumlah_pembelian}}</td>
+                                              <td>Rp. {{ number_format($dp->sub_total_harga) }}</td>
+                                          </tr>
+                                          @endif
+                                        @endforeach
+                                      </tbody>
+                                    </table>
+                                    
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                          <!-- /.modal -->
+                        </td>
+                        
                     </tr>
+                  @endforeach
+                </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -54,73 +136,12 @@
         <!-- /.row -->
       </div>
       <!-- /.container-fluid -->
+      
+      
     </section>
 
 
-      <!-- /.modal Edit-->
-      <div class="modal fade" id="modal-edit">
-      <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h4 class="modal-title">Detail Data Penjualan</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                        <label>ID Penjualan</label>
-                        <input type="text" class="form-control" placeholder="211021001" disabled>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                        <label>Total</label>
-                        <input type="text" class="form-control" placeholder="Rp. 250.000" disabled>
-                        </div>
-                    </div>
-                </div>
-
-                <table id="example2" class="table table-bordered table-hover">
-                  <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>Barang</th>
-                    <th>Jumlah</th>
-                    <th>Sub Total</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                        <!-- Code Menampilkan Data -->
-                        <td>1</td>
-                        <td>Pembersi Kaca</td>
-                        <td>2</td>
-                        <td>Rp. 50.000</td>
-                    </tr>
-                    <tr>
-                        <!-- Code Menampilkan Data -->
-                        <td>2</td>
-                        <td>Frame Kacamata</td>
-                        <td>1</td>
-                        <td>Rp. 200.000</td>
-                    </tr>
-                </table>
-                
-                </div>
-                <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-      <!-- /.modal -->
+      
 @endsection
 
 @section('script')

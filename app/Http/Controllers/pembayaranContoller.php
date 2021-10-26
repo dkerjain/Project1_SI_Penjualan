@@ -12,10 +12,12 @@ class pembayaranContoller extends Controller
 
     //menampilkan data pembayaran
     public function index(){
+        $pegawai = DB::table('pegawai')->get();
+        $pembayaran = DB::table('pembayaran')->get();
         if(!Session::get('/Login')){
             return redirect('/');
         }else{
-            return view ('konten/transaksi/pembayaran');
+            return view ('konten/transaksi/pembayaran', ['pegawai'=>$pegawai, 'pembayaran'=>$pembayaran]);
         }
     }
 }

@@ -43,21 +43,35 @@
                   </tr>
                   </thead>
                   <tbody>
+                    @foreach($pemesanan as $p)
                     <tr>
                         <!-- Code Menampilkan Data -->
-                        <td>211021001</td>
-                        <td>211021001</td>
-                        <td>21 Oktober 2021</td>
-                        <td>23 Oktober 2021</td>
-                        <td>Admin</td>
-                        <td>Niskenandi</td>
-                        <td>Rp. 250.000</td>
-                        <td>Proses</td>
-                        <td>Belum Lunas</td>
-                        <td style="text-align:center"><a href="" data-toggle="modal" data-target="#modal-edit"><i class="nav-icon fas fa-bars" ></i></a></td>
-                        <td>Surabaya</td>
-                        <td>081234550801</td>
+                        <td>{{$p->id_pemesanan}}</td>
+                        <td>{{$p->id_pemeriksaan}}</td>
+                        <td>{{$p->tanggal_pemesanan}}</td>
+                        <td></td>
+                        <td>{{$p->nama_pegawai}}</td>
+                        <td></td>
+                        <td>{{$p->total_biaya}}</td>
+                        <td>
+                          @if($p->status_pemesanan == 0)
+                            Pemesanan Selesai
+                          @else
+                            Proses
+                          @endif
+                        </td>
+                        <td>
+                          @if($p->status_pembayaran == 0)
+                            Lunas
+                          @else
+                            Belum Lunas
+                          @endif
+                        </td>
+                        <td style="text-align:center"><a href="" data-toggle="modal" data-target=".editpemesanan{{$p->id_pemesanan}}"><i class="nav-icon fas fa-bars" ></i></a></td>
+                        <td></td>
+                        <td></td>
                     </tr>
+                    
                 </table>
               </div>
               <!-- /.card-body -->
@@ -72,87 +86,100 @@
 
 
       <!-- /.modal Edit-->
-      <div class="modal fade" id="modal-edit">
-      <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h4 class="modal-title">Detail Data Pemesanan</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                        <label>ID Pemesanan</label>
-                        <input type="text" class="form-control" placeholder="211021001" disabled>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                        <label>Total</label>
-                        <input type="text" class="form-control" placeholder="Rp. 250.000" disabled>
-                        </div>
-                    </div>
-                </div>
-
-                <table id="example2" class="table table-bordered table-hover">
-                  <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>Barang</th>
-                    <th>Ukuran Lensa</th>
-                    <th>Jenis Lensa</th>
-                    <th>Merek</th>
-                    <th>Harga</th>
-                    <th>Jumlah</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                        <!-- Code Menampilkan Data -->
-                        <td>1</td>
-                        <td>Kaca</td>
-                        <td>L: -2 ; R: -1</td>
-                        <td>Radiasi</td>
-                        <td>Dior</td>
-                        <td>Rp. 250.000</td>
-                        <td>1</td>
-                    </tr>
+        <div class="modal fade editpemesanan{{$p->id_pemesanan}}" id="modal-edit">
+          <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Detail Data Pemesanan</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form class="form-horizontal" action="/pemesanan/tambahpembayaran" enctype="multipart/form-data" method="post">
                     
-                </table>
+                    <div class="modal-body">
+                      {{ @csrf_field() }}
+                        <input type="hidden" id="id_pemesanan" name="id_pemesanan" value="{{$p->id_pemesanan}}" class="form-control col-md-7 col-xs-12">
+                        <input type="hidden" id="total_bayar" name="total_bayar" value="{{$p->total_bayar}}" class="form-control col-md-7 col-xs-12">
+                        <input type="hidden" id="jumlah" name="jumlah" value="{{$p->jumlah_bayar}}" class="form-control col-md-7 col-xs-12">
+                    
+                      <div class="row">
+                          <div class="col-sm-6">
+                              <div class="form-group">
+                              <label>ID Pemesanan</label>
+                              <input type="text" class="form-control" placeholder="{{ $p->id_pemesanan}}" disabled>
+                              </div>
+                          </div>
 
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                        <label>Jumlah Bayar</label>
-                        <input type="text" class="form-control" placeholder="Rp. 100.000" >
-                        </div>
+                          <div class="col-sm-6">
+                              <div class="form-group">
+                              <label>Total</label>
+                              <input type="text" class="form-control" placeholder="Rp {{ number_format($p->total_biaya,2,',','.') }}" disabled>
+                              </div>
+                          </div>
+                      </div>
+
+                      <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>Barang</th>
+                          <th>Ukuran Lensa</th>
+                          <th>Jenis Lensa</th>
+                          <th>Harga</th>
+                          <th>Jumlah</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          @foreach($detail as $d)
+                            @if($p->id_pemesanan == $d->id_pemesanan)
+                              <tr>
+                                <td>{{$loop->iteration}}</td>
+                                <td>{{$d->nama_barang}}</td>
+                                <td>{{$d->ukuran_lensa}}</td>
+                                <td>{{$d->jenis_lensa}}</td>
+                                <td>{{$d->harga_kacamata}}</td>
+                                <td>{{$d->jumlah_pemesanan}}</td>
+                              </tr>
+                            @endif
+                          @endforeach
+                          
+                      </table>
+
+                      <div class="row">
+                          <div class="col-sm-6">
+                              <div class="form-group">
+                              <label>Jumlah Bayar</label>
+                              <input type="text" class="form-control" placeholder="Rp {{ number_format($p->jumlah_bayar,2,',','.') }}" >
+                              </div>
+                          </div>
+
+                          <div class="col-sm-6">
+                              <div class="form-group">
+                              <label>Sisa Bayar</label>
+                              <input type="text" class="form-control" placeholder="Rp {{ number_format($p->sisa,2,',','.') }}" >
+                              </div>
+                          </div>
+
+                      </div>
+                    
                     </div>
-
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                        <label>Sisa Bayar</label>
-                        <input type="text" class="form-control" placeholder="Rp. 150.000" >
-                        </div>
+                    <div class="modal-footer justify-content-between">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      @if($p->status_pembayaran = 1)
+                        <button type="submit" class="btn btn-success">Tambah Pembayaran</button>
+                      @endif
+                      
                     </div>
-
-                </div>
-                
-                </div>
-                <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Tambah Pembayaran</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
+                  </form>
+              </div>
+              @endforeach
+              <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
         </div>
       <!-- /.modal -->
+      
 @endsection
 
 @section('script')
@@ -185,5 +212,15 @@
     });
   });
 </script>
-
+@if (session('update'))
+  <script>
+      Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Data Pemeriksaan Berhasil Diupdate',
+          showConfirmButton: false,
+          timer: 2000
+      }); 
+  </script>
+@endif
 @endsection

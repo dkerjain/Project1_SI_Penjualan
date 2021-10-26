@@ -46,13 +46,18 @@ Route::post('/editJabatan/{id}','jabatanContoller@edit');
 //Penjualan
 Route::get('/penjualan','penjualanContoller@index');
 Route::get('/inputPenjualan','penjualanContoller@input');
+Route::post('/inputPenjualan/submit','penjualanContoller@proses');
 
 //Pemeriksaan
 Route::get('/pemeriksaan','pemeriksaanContoller@index');
+Route::post('/pemeriksaan/insert','pemeriksaanContoller@insert');
+Route::post('/pemeriksaan/edit','pemeriksaanContoller@update');
 
 //Pemesanan
 Route::get('/pemesanan','pemesananContoller@index');
 Route::get('/inputPemesanan','pemesananContoller@input');
+Route::post('/pemesanan/inputPemesanan/submit','pemesananContoller@store');
+Route::post('/pemesanan/tambahpembayaran','pemesananContoller@tambahpembayaran');
 
 //Pembayaran
 Route::get('/pembayaran','pembayaranContoller@index');
