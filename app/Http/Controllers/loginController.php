@@ -38,13 +38,13 @@ class loginController extends Controller
                 Session::put('id_jabatan', $pegawai->id_jabatan);
                 Session::put('nama_jabatan', $pegawai->nama_jabatan);
                 Session::put('/Login', TRUE);
-                if($pegawai->id_jabatan == "J001"){
+                if($pegawai->nama_jabatan == "Admin"){
                     Session::put('Admin', TRUE);
                 }
-                if($pegawai->id_jabatan == "J002"){
+                if($pegawai->nama_jabatan == "Kasir"){
                     Session::put('Kasir', TRUE);
                 }
-                if($pegawai->id_jabatan == "J003"){
+                if($pegawai->nama_jabatan == "Pemilik"){
                     Session::put('Pemilik', TRUE);
                 }
                 return redirect('/index');

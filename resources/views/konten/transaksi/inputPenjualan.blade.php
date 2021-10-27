@@ -121,7 +121,7 @@
                     </div>                     
                     <div class="p-2">
                         <label>Bayar :</label>
-                        <input type="text" class="form-control" id="totalpayment" oninput="kembali()"/>
+                        <input type="text" class="form-control" id="totalpayment" readonly oninput="kembali()"/>
                     </div>                     
                     <div class="p-2">
                         <label>Kembalian :</label>

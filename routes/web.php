@@ -47,6 +47,7 @@ Route::post('/editJabatan/{id}','jabatanContoller@edit');
 Route::get('/penjualan','penjualanContoller@index');
 Route::get('/inputPenjualan','penjualanContoller@input');
 Route::post('/inputPenjualan/submit','penjualanContoller@proses');
+Route::get('/notaPenjualan/{id}','penjualanContoller@notaPenjualan');
 
 //Pemeriksaan
 Route::get('/pemeriksaan','pemeriksaanContoller@index');

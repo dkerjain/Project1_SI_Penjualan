@@ -68,4 +68,16 @@ class penjualanContoller extends Controller
         
         return redirect('penjualan')->with('success','success'); 
     }
+
+    public function notaPenjualan($id){
+        $penjualan = DB::table('penjualan')
+        ->where('penjualan.id_penjualan', $id)->get();
+        $pegawai = DB::table('pegawai')->get();
+        $detail_penjualan = DB::table('detail_penjualan')->get();
+        $barang = DB::table('barang')->get();
+        
+        $pdf = \PDF::loadview('/konten/transaksi/notaPenjualan', compact('penjualan', 'id', 'pegawai', 'detail_penjualan', 'barang'))->setPaper('A5', 'landscape');
+        return $pdf->stream('NOTA'.$id.'.pdf');
+
+    }
 }
