@@ -38,16 +38,15 @@ class loginController extends Controller
                 Session::put('id_jabatan', $pegawai->id_jabatan);
                 Session::put('nama_jabatan', $pegawai->nama_jabatan);
                 Session::put('/Login', TRUE);
-                // if($user->jabatan_user == 0){
-                //     Session::put('admin', TRUE);
-                //     return redirect('/Home');
-                // }elseif($user->jabatan_user == 2){
-                //     Session::put('customer', TRUE);
-                //     return redirect('/Pemesanan');
-                // }elseif($user->jabatan_user == 1){
-                //     Session::put('gudang', TRUE);
-                //     return redirect('/Stok');
-                // }
+                if($pegawai->id_jabatan == "J001"){
+                    Session::put('Admin', TRUE);
+                }
+                if($pegawai->id_jabatan == "J002"){
+                    Session::put('Kasir', TRUE);
+                }
+                if($pegawai->id_jabatan == "J003"){
+                    Session::put('Pemilik', TRUE);
+                }
                 return redirect('/index');
             }else{
                 Session::flash('fpassword', 'Salah Memasukkan Password');

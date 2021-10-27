@@ -22,105 +22,230 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="/index" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-table"></i>
-              <p>
-                Data Master
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/dataJabatan" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Jabatan</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/dataPegawai" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Pegawai</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/dataKategori" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Ketegori Barang</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/dataBarang" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Barang</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          
-          <li class="nav-item">
-            <a href="/pemeriksaan" class="nav-link">
-              <i class="nav-icon fas fa-eye"></i>
-              <p>
-                Pemeriksaan
-              </p>
-            </a>
-          </li>
+          @if(\Session::has('Admin'))
+            <li class="nav-item menu-open">
+              <a href="/index" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Dashboard
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-table"></i>
+                <p>
+                  Data Master
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/dataPegawai" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pegawai</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/dataKategori" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Ketegori Barang</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/dataBarang" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Barang</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item">
+              <a href="/pemeriksaan" class="nav-link">
+                <i class="nav-icon fas fa-eye"></i>
+                <p>
+                  Pemeriksaan
+                </p>
+              </a>
+            </li>
 
-          <li class="nav-item">
-            <a href="/pemesanan" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Pemesanan
-              </p>
-            </a>
-          </li>
+            <li class="nav-item">
+              <a href="/pemesanan" class="nav-link">
+                <i class="nav-icon fas fa-edit"></i>
+                <p>
+                  Pemesanan
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              <a href="/penjualan" class="nav-link">
+                <i class="nav-icon fas fa-book"></i>
+                <p>
+                  Penjualan
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/pembayaran" class="nav-link">
+                <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  Pembayaran
+                </p>
+              </a>
+            </li>
           
-          <li class="nav-item">
-            <a href="/penjualan" class="nav-link">
-              <i class="nav-icon fas fa-book"></i>
-              <p>
-                Penjualan
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/pembayaran" class="nav-link">
-              <i class="nav-icon fas fa-calculator"></i>
-              <p>
-                Pembayaran
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/laporan" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Laporan
-              </p>
-            </a>
-          </li>
-          <li class="nav-header">Akun</li>
-          <li class="nav-item">
-            <a href="/profile" class="nav-link btn-info">
-              <i class="nav-icon fas fa-user"></i>
-              <p>Edit Profile</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/logoutCek" class="nav-link btn-secondary">
-              <i class="nav-icon fas fa-power-off"></i>
-              <p>Logout Akun</p>
-            </a>
-          </li>
+            <li class="nav-header">Akun</li>
+            <li class="nav-item">
+              <a href="/profile" class="nav-link btn-info">
+                <i class="nav-icon fas fa-user"></i>
+                <p>Edit Profile</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/logoutCek" class="nav-link btn-secondary">
+                <i class="nav-icon fas fa-power-off"></i>
+                <p>Logout Akun</p>
+              </a>
+            </li>
+          @endif
+          @if(\Session::has('Kasir'))
+            <li class="nav-item">
+              <a href="/pemesanan" class="nav-link">
+                <i class="nav-icon fas fa-edit"></i>
+                <p>
+                  Pemesanan
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              <a href="/penjualan" class="nav-link">
+                <i class="nav-icon fas fa-book"></i>
+                <p>
+                  Penjualan
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/pembayaran" class="nav-link">
+                <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  Pembayaran
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/logoutCek" class="nav-link btn-secondary">
+                <i class="nav-icon fas fa-power-off"></i>
+                <p>Logout Akun</p>
+              </a>
+            </li>
+          @endif
+          @if(\Session::has('Pemilik'))
+            <li class="nav-item menu-open">
+              <a href="/index" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Dashboard
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-table"></i>
+                <p>
+                  Data Master
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/dataJabatan" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Jabatan</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/dataPegawai" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pegawai</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/dataKategori" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Ketegori Barang</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/dataBarang" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Barang</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item">
+              <a href="/pemeriksaan" class="nav-link">
+                <i class="nav-icon fas fa-eye"></i>
+                <p>
+                  Pemeriksaan
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="/pemesanan" class="nav-link">
+                <i class="nav-icon fas fa-edit"></i>
+                <p>
+                  Pemesanan
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              <a href="/penjualan" class="nav-link">
+                <i class="nav-icon fas fa-book"></i>
+                <p>
+                  Penjualan
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/pembayaran" class="nav-link">
+                <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  Pembayaran
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="/laporan" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Laporan
+                </p>
+              </a>
+            </li>
+          
+            <li class="nav-header">Akun</li>
+            <li class="nav-item">
+              <a href="/profile" class="nav-link btn-info">
+                <i class="nav-icon fas fa-user"></i>
+                <p>Edit Profile</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/logoutCek" class="nav-link btn-secondary">
+                <i class="nav-icon fas fa-power-off"></i>
+                <p>Logout Akun</p>
+              </a>
+            </li>
+          @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
