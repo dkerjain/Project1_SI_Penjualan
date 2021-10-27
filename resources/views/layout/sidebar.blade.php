@@ -41,6 +41,12 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
+                  <a href="/dataJabatan" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Jabatan</p>
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a href="/dataPegawai" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Pegawai</p>
