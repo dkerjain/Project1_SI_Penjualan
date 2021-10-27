@@ -27,7 +27,7 @@ class jabatanContoller extends Controller
                 'id_jabatan' => IdGenerator::generate(['table' => 'jabatan', 'field' => 'id_jabatan', 'length' => 4, 'prefix' => 'J']),
                 'nama_jabatan' => $request->nama
             ]);
-            return back();
+            return back()->with('success','success');
         }
     }
 
@@ -38,7 +38,7 @@ class jabatanContoller extends Controller
             DB::table('jabatan')->where('id_jabatan', $id)->update([
                 'nama_jabatan' => $request->nama
             ]);
-            return back();
+            return back()->with('update','update');
         }
     }
 }

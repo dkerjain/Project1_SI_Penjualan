@@ -66,6 +66,6 @@ class penjualanContoller extends Controller
                 'jumlah_bayar' => $request->total
             ]);
         
-        return redirect('penjualan'); 
+        return redirect('penjualan')->with('success','success'); 
     }
 }

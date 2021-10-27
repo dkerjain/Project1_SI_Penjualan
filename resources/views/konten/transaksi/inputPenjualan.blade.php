@@ -8,6 +8,8 @@
   <!-- Select2 -->
   <link rel="stylesheet" href="{{ asset('../../asset/plugins/select2/css/select2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('../../asset/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+
+  
 @endsection
 @section('konten')
     <!-- Content Header (Page header) -->
@@ -32,7 +34,7 @@
                         <h3 class="card-title">Tanggal</h3>
                     </div>
                         <div class="input-group date p-3" id="reservationdate" data-target-input="nearest">
-                        <input type="date" class="form-control datetimepicker-input disabled" data-target="#reservationdate"/>
+                        <input type="date" class="form-control datetimepicker-input disabled" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}" data-target="#reservationdate"/>
                     </div>
                         
                 </div>
@@ -213,6 +215,8 @@
 <!-- InputMask -->
 <script src="{{ asset('../../plugins/moment/moment.min.js') }}"></script>
 <script src="{{ asset('../../plugins/inputmask/jquery.inputmask.min.js') }}"></script>
+
+
 
 <script>
   $(function () {

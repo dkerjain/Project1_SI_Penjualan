@@ -434,19 +434,5 @@ $(document).ready(function() {
 });
 </script>
 
-@if (session('success'))
-  <script>
-      Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Data Pemesanan Berhasil Disimpan',
-          showConfirmButton: false,
-          timer: 2000
-      }); 
-  </script>
-@endif
-
-
-
 @endsection
 

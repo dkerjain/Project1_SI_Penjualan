@@ -153,4 +153,27 @@
     });
   });
 </script>
+
+@if (session('success'))
+  <script>
+      Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Data Jabatan Berhasil Disimpan',
+          showConfirmButton: false,
+          timer: 2000
+      }); 
+  </script>
+@endif
+@if (session('update'))
+  <script>
+      Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Data Jabatan Berhasil Diupdate',
+          showConfirmButton: false,
+          timer: 2000
+      }); 
+  </script>
+@endif
 @endsection

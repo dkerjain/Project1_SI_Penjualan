@@ -36,7 +36,7 @@ class pegawaiContoller extends Controller
                 'username' => $request->username,
                 'pasword' => $request->pasword
             ]);
-            return back();
+            return back()->with('success','success');
         }
     }
 
@@ -53,7 +53,7 @@ class pegawaiContoller extends Controller
                 'username' => $request->username,
                 'pasword' => $request->pasword
             ]);
-            return back();
+            return back()->with('update','update');
         }
     }
 }

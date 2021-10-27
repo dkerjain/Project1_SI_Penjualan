@@ -44,7 +44,7 @@ class barangContoller extends Controller
                 'foto_barang' => $path,
                 'deskripsi_barang' => $request->deskripsi
             ]);
-            return back();
+            return back()->with('success','success');
         }
     }
 
@@ -70,7 +70,7 @@ class barangContoller extends Controller
                 'foto_barang' => $path,
                 'deskripsi_barang' => $request->deskripsi
             ]);
-            return back();
+            return back()->with('update','update');
         }
     }
 }

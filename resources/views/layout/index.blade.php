@@ -68,6 +68,9 @@
 <script src="{{ asset('/asset/dist/js/demo.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('/asset/dist/js/pages/dashboard3.js') }}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 @yield('script')
 </body>
 </html>

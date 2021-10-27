@@ -27,7 +27,7 @@ class kategoriContoller extends Controller
                 'id_kategori' => IdGenerator::generate(['table' => 'kategori', 'field' => 'id_kategori', 'length' => 4, 'prefix' => 'K']),
                 'jenis_kategori' => $request->nama
             ]);
-            return back();
+            return back()->with('success','success');
         }
     }
 
@@ -38,7 +38,7 @@ class kategoriContoller extends Controller
             DB::table('kategori')->where('id_kategori', $id)->update([
                 'jenis_kategori' => $request->nama
             ]);
-            return back();
+            return back()->with('update','update');
         }
     }
 }

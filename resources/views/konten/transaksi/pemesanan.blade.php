@@ -251,7 +251,19 @@
       Swal.fire({
           position: 'center',
           icon: 'success',
-          title: 'Data Pemeriksaan Berhasil Diupdate',
+          title: 'Pembayaran Berhasil Disimpan',
+          showConfirmButton: false,
+          timer: 2000
+      }); 
+  </script>
+@endif
+
+@if (session('success'))
+  <script>
+      Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Data Pemesanan Berhasil Disimpan',
           showConfirmButton: false,
           timer: 2000
       }); 
