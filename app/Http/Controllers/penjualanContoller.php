@@ -76,7 +76,7 @@ class penjualanContoller extends Controller
         $detail_penjualan = DB::table('detail_penjualan')->get();
         $barang = DB::table('barang')->get();
         
-        $pdf = \PDF::loadview('/konten/transaksi/notaPenjualan', compact('penjualan', 'id', 'pegawai', 'detail_penjualan', 'barang'))->setPaper('A5', 'landscape');
+        $pdf = \PDF::loadview('/konten/transaksi/notaPenjualan', compact('penjualan', 'id', 'pegawai', 'detail_penjualan', 'barang'))->setPaper('A5');
         return $pdf->stream('NOTA'.$id.'.pdf');
 
     }
