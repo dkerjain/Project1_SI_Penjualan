@@ -58,8 +58,10 @@
                             <td>{{ $peg->nama_pegawai }}</td>
                           @endif
                         @endforeach
-                        <td>{{ $pb->jumlah_bayar }}</td>
-                        <td>{{ $pb->total_bayar }}</td>
+                        <td>Rp {{ number_format($pb->jumlah_bayar,2,',','.') }}</td>
+                        <td>
+                        Rp {{ number_format($pb->total_bayar,2,',','.') }}
+                        </td>
                     </tr>
                     @endforeach
                 </table>

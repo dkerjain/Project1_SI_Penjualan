@@ -60,7 +60,7 @@
                     @endif
                     @endforeach
                     
-                    <td>{{$p->total_biaya}}</td>
+                    <td>Rp {{ number_format($p->total_biaya,2,',','.') }}</td>
                     <td>
                       @if($p->status_pemesanan == 0)
                         Pemesanan Selesai
@@ -151,7 +151,7 @@
                         <td>{{$d->nama_barang}}</td>
                         <td>{{$d->ukuran_lensa}}</td>
                         <td>{{$d->jenis_lensa}}</td>
-                        <td>{{$d->harga_kacamata}}</td>
+                        <td>Rp {{ number_format($d->harga_kacamata,2,',','.') }}</td>
                         <td>{{$d->jumlah_pemesanan}}</td>
                       </tr>
                     @endif

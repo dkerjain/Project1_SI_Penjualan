@@ -81,7 +81,7 @@
                                         </div>
                                         <div class="col-sm-4">
                                           <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Rp. {{ number_format($p->total_harga) }}" disabled>
+                                            <input type="text" class="form-control" placeholder="Rp. {{ number_format($p->total_harga,2,',','.') }}" disabled>
                                           </div>
                                         </div>
                                     </div>
