@@ -59,6 +59,7 @@ Route::get('/pemesanan','pemesananContoller@index');
 Route::get('/inputPemesanan','pemesananContoller@input');
 Route::post('/pemesanan/inputPemesanan/submit','pemesananContoller@store');
 Route::post('/pemesanan/tambahpembayaran','pemesananContoller@tambahpembayaran');
+Route::get('/notaPemesanan/{id}','pemesananContoller@notapemesanan');
 
 //Pembayaran
 Route::get('/pembayaran','pembayaranContoller@index');

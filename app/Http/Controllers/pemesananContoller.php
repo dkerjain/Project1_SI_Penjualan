@@ -117,4 +117,16 @@ class pemesananContoller extends Controller
             return redirect('/pemesanan')->with('update','success');
         }
     }
+
+    public function notapemesanan($id){
+        $pemesanan = DB::table('pemesanan')
+        ->where('id_pemesanan', $id)->get();
+        $pegawai = DB::table('pegawai')->get();
+        $detail_pemesanan = DB::table('detail_pemesanan')->get();
+        $barang = DB::table('barang')->get();
+        
+        $pdf = \PDF::loadview('/konten/transaksi/notapemesanan', compact('pemesanan', 'id', 'pegawai', 'detail_pemesanan', 'barang'))->setPaper('A5');
+        return $pdf->stream('NOTA'.$id.'.pdf');
+
+    }
 }
