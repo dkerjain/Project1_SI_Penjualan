@@ -288,7 +288,7 @@ $(document).ready(function() {
 
         cell4.innerHTML = '<input type="text" id="jenis_lensa'+barang[index]["id_barang"]+'" name="jenis_lensa['+barang[index]["id_barang"]+']" oninput="recount(\''+barang[index]["id_barang"]+'\')">';
 
-		cell5.innerHTML = '<input type="number" name="qty['+barang[index]["id_barang"]+']" value="1" oninput="recount(\''+barang[index]["id_barang"]+'\')" id="qty'+barang[index]["id_barang"]+'" style="background:transparent; border:none; text-align:left; width=100%">';	
+		cell5.innerHTML = '<input type="number" name="qty['+barang[index]["id_barang"]+']" value="1" min="0" max="'+barang[index]["stok_barang"]+'" oninput="recount(\''+barang[index]["id_barang"]+'\')" id="qty'+barang[index]["id_barang"]+'" style="background:transparent; border:none; text-align:left; width=100%">';	
 
 		cell6.innerHTML = '<input type="hidden" class="subtotal" name="subtotal['+barang[index]["id_barang"]+']" value="'+barang[index]["harga_barang"]+'" id="subtotal'+barang[index]["id_barang"]+'"><span id="subtotalval'+barang[index]["id_barang"]+'">'+barang[index]["harga_barang"]+'</span>';
 
