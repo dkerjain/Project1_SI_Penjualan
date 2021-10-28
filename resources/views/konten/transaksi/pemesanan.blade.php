@@ -75,7 +75,10 @@
                         Belum Lunas
                       @endif
                     </td>
-                    <td style="text-align:center"><a href="" data-toggle="modal" data-target=".editpemesanan{{$p->id_pemesanan}}"><i class="nav-icon fas fa-bars" ></i></a></td>
+                    <td style="text-align:center">
+                      <a href="" data-toggle="modal" data-target=".editpemesanan{{$p->id_pemesanan}}"><i class="nav-icon fas fa-bars" ></i></a>
+                      <a href="/notaPemesanan/{{ $p->id_pemesanan }}" target="_blank" ><i class="nav-icon fas fa-print" ></i></a>
+                    </td>
                     
                     
               

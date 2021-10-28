@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Nota Penjualan {{ $id }}</title>
+    <title>Nota Pemesanan {{ $id }}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     
     <style>
@@ -74,8 +74,8 @@
 		}
     </style>
 </head>
-    @foreach($penjualan as $p)
-        @if ($id == $p->id_penjualan)
+    @foreach($pemesanan as $p)
+        @if ($id == $p->id_pemesanan)
         <body>
             <div class="container ">
             
@@ -83,11 +83,11 @@
                     
                     <thead>
                         <tr>
-                            <th colspan="3">Invoice <strong># {{ $p-> id_penjualan }}</strong></th>
-                            <th>{{\Carbon\Carbon::parse($p->tanggal_penjualan)->translatedFormat('l, d F Y')}}</th>
+                            <th colspan="4">Invoice <strong># {{ $p-> id_pemesanan }}</strong></th>
+                            <th colspan="2">{{\Carbon\Carbon::parse($p->tanggal_pemesanan)->translatedFormat('l, d F Y')}}</th>
                         </tr>
                         <tr>
-                            <td colspan="3">
+                            <td colspan="5">
                                 <h4>Store : </h4>
                                 <p>Rumah Optik Sukodono<br>
                                     Jl. Yani No. 25 Karangnongko-Sukodono-Sidoarjo<br>
@@ -98,7 +98,7 @@
                         <tr>
                             @foreach($pegawai as $peg)                         
                                  @if (($p->id_pegawai) == ($peg->id_pegawai))
-                                    <th colspan="3">Pegawai <strong> : {{ $peg->nama_pegawai }}</strong></th>
+                                    <th colspan="5">Pegawai <strong> : {{ $peg->nama_pegawai }}</strong></th>
                                     <th colspan="1">#{{ $peg->id_pegawai }}</th>
                                     @endif
                             @endforeach
@@ -106,20 +106,24 @@
                     </thead>
                     <tbody>
                                 <tr>
-                                    <th>Barang</th>                                   
+                                    <th>Barang</th>
+                                    <th>Ukuran Lensa</th>
+                                    <th>Jenis Lensa</th>                                 
                                     <th>Jumlah</th> 
-                                    <th >Harga</th>
+                                    <th>Harga</th>
                                     <th>Sub Total</th>
                                 </tr>
-                    @foreach ($detail_penjualan as $dp)
+                    @foreach ($detail_pemesanan as $dp)
                         @foreach($barang as $b)
-                            @if ( ($p->id_penjualan) == ($dp->id_penjualan) )
+                            @if ( ($p->id_pemesanan) == ($dp->id_pemesanan) )
                                 @if ( ($dp->id_barang) == ($b->id_barang) )
                                 <tr>
                                     <td border="2px">{{ $b->nama_barang}}</td>    
-                                    <td border="2px" align="center">{{ $dp->jumlah_pembelian}}</td>
+                                    <td border="2px">{{ $dp->ukuran_lensa}}</td>    
+                                    <td border="2px">{{ $dp->jenis_lensa}}</td>    
+                                    <td border="2px" align="center">{{ $dp->jumlah_pemesanan}}</td>
                                     <td border="2px" align="right">Rp.{{ number_format($b->harga_barang,0,',','.')}}</td>
-                                    <td border="2px" align="right">Rp.{{ number_format($dp->sub_total_harga,0,',','.')}}</td>
+                                    <td border="2px" align="right">Rp.{{ number_format($dp->harga_kacamata,0,',','.')}}</td>
                                 </tr>
                                 @endif
                             @endif
@@ -128,8 +132,8 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th colspan="3">TOTAL</th>
-                            <td class="bg" align="right">Rp.{{ number_format($p->total_harga,0,',','.')}}</td>
+                            <th colspan="5">TOTAL</th>
+                            <td class="bg" align="right">Rp.{{ number_format($p->total_biaya,0,',','.')}}</td>
                         </tr>
                     </tfoot>
                 </table>
