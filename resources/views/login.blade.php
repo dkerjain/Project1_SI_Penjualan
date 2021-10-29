@@ -24,6 +24,16 @@
         <a href="#" class="h1"><b>Rumah</b>Optik</a>
       </div>
       <div class="card-body">
+        @if ($message = Session::get('fpassword'))
+          <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>{{ $message }}
+          </div>
+				@endif
+        @if ($message = Session::get('femail'))
+          <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>{{ $message }}
+          </div>
+				@endif
         <p class="login-box-msg">Masuk ke Sistem Informasi Penjualan Rumah Optik Sukodono</p>
         <!-- Method Login -->
         <!-- <form action="" method="post"> -->
