@@ -41,4 +41,13 @@ class kategoriContoller extends Controller
             return back()->with('update','update');
         }
     }
+
+    public function hapus(Request $request, $id){
+        if(!Session::get('/Login')){
+            return redirect('/');
+        }else{
+            DB::table('kategori')->where('id_kategori', $id)->delete();
+            return back()->with('delete','delete');
+        }
+    }
 }

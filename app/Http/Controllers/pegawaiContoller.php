@@ -56,4 +56,13 @@ class pegawaiContoller extends Controller
             return back()->with('update','update');
         }
     }
+
+    public function hapus(Request $request, $id){
+        if(!Session::get('/Login')){
+            return redirect('/');
+        }else{
+            DB::table('pegawai')->where('id_pegawai', $id)->delete();
+            return back()->with('delete','delete');
+        }
+    }
 }

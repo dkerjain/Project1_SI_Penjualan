@@ -229,11 +229,20 @@
               </a>
             </li>
 
+            <li class="nav-header">Laporan</li>
             <li class="nav-item">
               <a href="/laporan" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
-                  Laporan
+                  Laporan Penjualan
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/laporan/laporanPiutang" class="nav-link">
+                <i class="nav-icon fas fa-money-check-alt"></i>
+                <p>
+                  Laporan Piutang
                 </p>
               </a>
             </li>

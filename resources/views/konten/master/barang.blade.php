@@ -48,6 +48,7 @@
                                                     <td style="text-align:center">
                                                         <a href="#edit{{ $b->id_barang }}" data-toggle="modal" style="margin:5px;"><i class="nav-icon fas fa-edit" ></i></a>
                                                         <a href="#foto{{ $b->id_barang }}" data-toggle="modal" style="margin:5px;"><i class="nav-icon fas fa-image" ></i></a>
+                                                        <a class="hapus ml-3" href="/hapusBarang/{{ $b->id_barang }}" data-toggle="modal"><i class="nav-icon fas fa-trash" ></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -273,4 +274,37 @@
       }); 
   </script>
 @endif
+@if (session('delete'))
+  <script>
+      Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Data Jabatan Berhasil Dihapus',
+          showConfirmButton: false,
+          timer: 2000
+      }); 
+  </script>
+@endif
+<script>
+    $('.hapus').on('click',function(e){
+
+        e.preventDefault();
+
+        const href = $(this).attr('href');
+
+        Swal.fire({
+            title: 'Apakah Anda Yakin ?',
+            text: "Anda akan menghapus data dari sistem!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Delete!'
+        }).then((result) => {
+                if (result.value) {
+                    document.location.href = href;
+            }
+        })
+    });
+</script>
 @endsection

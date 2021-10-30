@@ -50,4 +50,14 @@ class laporanContoller extends Controller
 
             return view('konten/transaksi/laporan')->with(compact('penjualan'));
     }
+
+    public function laporanPiutang(){
+        
+        if(!Session::get('/Login')){
+            return redirect('/');
+        }else{        
+
+            return view('konten/transaksi/laporanPiutang');
+        }
+    }
 }
