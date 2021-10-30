@@ -64,12 +64,7 @@
                             <div class="col-md-6">
                                 <div class="p-3">
                                     <label>Input Pemeriksaan</label>
-                                    <select class="form-control select2" name="pemeriksaan" id="pemeriksaan">
-                                        <option selected>Pilih ID Pemeriksaan</option>
-                                        @foreach($pemeriksaan as $p)
-                                        <option value="{{$p->id_pemeriksaan}}">{{$p->id_pemeriksaan}}</option>
-                                        @endforeach
-                                    </select>
+                                    <input type="text" name="pemeriksaan" id="pemeriksaan" class="form-control" readonly value="{{$pemeriksaan}}"/> 
                                 </div>
                             </div>
 
@@ -284,7 +279,7 @@ $(document).ready(function() {
 
 		cell2.innerHTML = '<input type="number" readonly id="harga'+barang[index]["id_barang"]+'" name="harga['+barang[index]["id_barang"]+']" value="'+barang[index]["harga_barang"]+'" oninput="recount(\''+barang[index]["id_barang"]+'\')"style="background:transparent; border:none; text-align:left; width=100%">';
 
-        cell3.innerHTML = '<input type="number" id="ukuran_lensa'+barang[index]["id_barang"]+'" name="ukuran_lensa['+barang[index]["id_barang"]+']" oninput="recount(\''+barang[index]["id_barang"]+'\')">';
+        cell3.innerHTML = '<input type="number" step="any" id="ukuran_lensa'+barang[index]["id_barang"]+'" name="ukuran_lensa['+barang[index]["id_barang"]+']" oninput="recount(\''+barang[index]["id_barang"]+'\')">';
 
         cell4.innerHTML = '<input type="text" id="jenis_lensa'+barang[index]["id_barang"]+'" name="jenis_lensa['+barang[index]["id_barang"]+']" oninput="recount(\''+barang[index]["id_barang"]+'\')">';
 

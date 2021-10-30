@@ -23,6 +23,8 @@ class pemesananContoller extends Controller
         }else{
 
             $pemeriksaan = DB::table('pemeriksaan')->get();
+            
+            
             $pemesanan   = DB::table('pemesanan')->join('pegawai as p','pemesanan.id_pegawai','p.id_pegawai')
                            ->join('pembayaran as pb','pemesanan.id_pemesanan','pb.id_pemesanan')
                            ->join('pemeriksaan as pm','pemesanan.id_pemeriksaan','pm.id_pemeriksaan')
@@ -39,7 +41,9 @@ class pemesananContoller extends Controller
             return redirect('/');
         }else{
 
-            $pemeriksaan = Db::table('pemeriksaan')->get();
+            $pemeriksaan = Pemeriksaan::select('id_pemeriksaan')->max('id_pemeriksaan');
+            // dd($pemeriksaan);
+
             $barang      = Barang::join('kategori as k','barang.id_kategori','k.id_kategori')->get();
            
             return view ('konten/transaksi/inputPemesanan')->with(compact('pemeriksaan','barang'));
