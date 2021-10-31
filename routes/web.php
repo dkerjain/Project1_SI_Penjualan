@@ -73,3 +73,4 @@ Route::get('/laporan','laporanContoller@index');
 Route::get('/laporan/report','laporanContoller@report');
 Route::get('/laporan/laporanPiutang','laporanContoller@laporanPiutang');
 Route::get('/laporan/laporanPembayaran','laporanContoller@laporanPembayaran');
+Route::get('/laporan/reportPiutang','laporanContoller@reportPiutang');
