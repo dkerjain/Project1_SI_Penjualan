@@ -245,6 +245,14 @@
                   Laporan Piutang
                 </p>
               </a>
+            </li>            
+            <li class="nav-item">
+              <a href="/laporan/laporanPembayaran" class="nav-link">
+                <i class="nav-icon fas fa-dollar-sign"></i>
+                <p>
+                  Laporan Pembayaran
+                </p>
+              </a>
             </li>
           
             <li class="nav-header">Akun</li>

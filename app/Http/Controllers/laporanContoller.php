@@ -60,4 +60,14 @@ class laporanContoller extends Controller
             return view('konten/transaksi/laporanPiutang');
         }
     }
+
+    public function laporanPembayaran(){
+        
+        if(!Session::get('/Login')){
+            return redirect('/');
+        }else{        
+
+            return view('konten/transaksi/laporanPembayaran');
+        }
+    }
 }
