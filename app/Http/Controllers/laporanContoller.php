@@ -93,8 +93,37 @@ class laporanContoller extends Controller
         if(!Session::get('/Login')){
             return redirect('/');
         }else{        
-
-            return view('konten/transaksi/laporanPembayaran');
+            $pemesanan = DB::table('pemesanan')
+            ->where('status_pembayaran', '=', '0')
+            ->get();
+            $pembayaran = DB::table('pembayaran')
+            ->where('sisa', '=', '0')
+            ->get();
+            return view('konten/transaksi/laporanPembayaran', compact('pemesanan', 'pembayaran'));
         }
+    }
+
+    public function reportPembayaran(){
+        $start = Carbon::now()->startOfMonth()->format('Y-m-d H:i:s');
+        //DAN ENDOFMONTH UNTUK MENGAMBIL TANGGAL TERAKHIR DIBULAN YANG BERLAKU SAAT INI
+        $end = Carbon::now()->endOfMonth()->format('Y-m-d H:i:s');
+
+        //JIKA USER MELAKUKAN FILTER MANUAL, MAKA PARAMETER DATE AKAN TERISI
+        if (request()->date != '') {
+            //MAKA FORMATTING TANGGALNYA BERDASARKAN FILTER USER
+            $date = explode(' - ' ,request()->date);
+            $start = Carbon::parse($date[0])->format('Y-m-d') . ' 00:00:00';
+            $end = Carbon::parse($date[1])->format('Y-m-d') . ' 23:59:59';
+        }
+
+        $pemesanan = DB::table('pemesanan')
+            ->where('status_pembayaran', '=', '0')
+            ->whereBetween('pemesanan.tanggal_pemesanan', [$start, $end])
+            ->get();
+            $pembayaran = DB::table('pembayaran')
+            ->where('sisa', '=', '0')
+            ->get();
+
+            return view('konten/transaksi/laporanPembayaran')->with(compact('pemesanan', 'pembayaran'));
     }
 }

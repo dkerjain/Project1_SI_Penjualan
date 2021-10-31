@@ -32,7 +32,7 @@
                                     <i class="far fa-calendar-alt"></i>
                                 </span>
                                 </div>
-                                <form action="#" method="get">
+                                <form action="/laporan/reportPembayaran" method="get">
                                   <div class="input-prepend input-group">
                                     <input type="text" name="date" class="form-control float-right" id="reservation">
                                     <button class="btn btn-secondary" type="submit">Filter</button>
@@ -52,20 +52,22 @@
                     <th>ID Pemesanan</th>
                     <th>Tanggal Pemesanan</th>
                     <th>Tanggal Pelunasan</th>
-                    <th>Nama Barang</th>
-                    <th>Harga</th>
                     <th>Jumlah Bayar</th>
                   </tr>
                   </thead>
                   <tbody>
+                    @foreach($pemesanan as $p)
                       <tr>
-                          <td>1</td>
-                          <td>2</td>
-                          <td>3</td>
-                          <td>4</td>
-                          <td>5</td>
-                          <td>6</td>
+                          <td>{{ $p->id_pemesanan }}</td>
+                          <td>{{ \Carbon\Carbon::parse($p->tanggal_pemesanan)->translatedFormat('d M Y ') }}</td>
+                          @foreach($pembayaran as $pb)
+                          @if($pb->id_pemesanan == $p->id_pemesanan)
+                          <td>{{ \Carbon\Carbon::parse($pb->tanggal_pembayaran)->translatedFormat('d M Y h:i:s') }}</td>
+                          <td>{{ $pb->jumlah_bayar }}</td>
+                          @endif
+                          @endforeach
                       </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>
