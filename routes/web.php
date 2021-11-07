@@ -60,10 +60,11 @@ Route::post('/pemeriksaan/edit','pemeriksaanContoller@update');
 
 //Pemesanan
 Route::get('/pemesanan','pemesananContoller@index');
-Route::get('/inputPemesanan','pemesananContoller@input');
+Route::get('/inputPemesanan/{id}','pemesananContoller@input');
 Route::post('/pemesanan/inputPemesanan/submit','pemesananContoller@store');
 Route::post('/pemesanan/tambahpembayaran','pemesananContoller@tambahpembayaran');
 Route::get('/notaPemesanan/{id}','pemesananContoller@notapemesanan');
+Route::get('/hapus/{id}','pemesananContoller@nonAktif');
 
 //Pembayaran
 Route::get('/pembayaran','pembayaranContoller@index');
