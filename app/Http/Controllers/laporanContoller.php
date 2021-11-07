@@ -93,13 +93,14 @@ class laporanContoller extends Controller
         if(!Session::get('/Login')){
             return redirect('/');
         }else{        
-            $pemesanan = DB::table('pemesanan')
-            ->where('status_pembayaran', '=', '0')
-            ->get();
-            $pembayaran = DB::table('pembayaran')
-            ->where('sisa', '=', '0')
-            ->get();
-            return view('konten/transaksi/laporanPembayaran', compact('pemesanan', 'pembayaran'));
+            $pemesanan = DB::table('pemesanan')->get();
+            $pembayaran1 = DB::table('pembayaran')
+                ->where('sisa', '!=', '0')
+                ->get();
+            $pembayaran2 = DB::table('pembayaran')
+                ->where('sisa', '=', '0')
+                ->get();
+            return view('konten/transaksi/laporanPembayaran', compact('pemesanan', 'pembayaran1', 'pembayaran2'));
         }
     }
 
@@ -117,13 +118,15 @@ class laporanContoller extends Controller
         }
 
         $pemesanan = DB::table('pemesanan')
-            ->where('status_pembayaran', '=', '0')
-            ->whereBetween('pemesanan.tanggal_pemesanan', [$start, $end])
+            ->whereBetween('tanggal_pemesanan', [$start, $end])
             ->get();
-            $pembayaran = DB::table('pembayaran')
+        $pembayaran1 = DB::table('pembayaran')
+            ->where('sisa', '!=', '0')
+            ->get();
+        $pembayaran2 = DB::table('pembayaran')
             ->where('sisa', '=', '0')
             ->get();
 
-            return view('konten/transaksi/laporanPembayaran')->with(compact('pemesanan', 'pembayaran'));
+            return view('konten/transaksi/laporanPembayaran')->with(compact('pemesanan', 'pembayaran1', 'pembayaran2'));
     }
 }

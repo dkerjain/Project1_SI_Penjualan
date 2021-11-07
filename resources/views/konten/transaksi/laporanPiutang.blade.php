@@ -58,17 +58,29 @@
                   </tr>
                   </thead>
                   <tbody>
+                    @php
+                      $total=0;
+                    @endphp
                     @foreach($pemesanan as $p)
                       <tr>
                           <td>{{ $p->id_pemesanan }}</td>
                           <td>{{ \Carbon\Carbon::parse($p->tanggal_pemesanan)->translatedFormat('d M Y ') }}</td>
                           <td>{{ $p->nama_pelanggan }}</td>
-                          <td>{{ $p->total_biaya }}</td>
-                          <td>{{ $p->jumlah_bayar }}</td>
-                          <td>{{ $p->sisa }}</td>
+                          <td>Rp {{ number_format($p->total_biaya,2,',','.')}}</td>
+                          <td>Rp {{ number_format($p->jumlah_bayar,2,',','.')}}</td>
+                          <td>Rp {{ number_format($p->sisa,2,',','.')}}</td>
+                          @php
+                            $total=$total+$p->sisa;
+                          @endphp
                       </tr>
                       @endforeach
                   </tbody>
+                  <tfoot>
+                      <tr>
+                        <th colspan="5">TOTAL PIUTANG</th>
+                        <th>Rp {{ number_format($total,2,',','.')}}</th>
+                      </tr>
+                  </tfoot>
                 </table>
               </div>
               <!-- /.card-body -->

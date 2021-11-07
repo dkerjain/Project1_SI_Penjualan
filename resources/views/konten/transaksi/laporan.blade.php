@@ -53,20 +53,32 @@
                     <th>Tanggal Penjualan</th>
                     <th>Nama Barang</th>
                     <th>Jumlah Pembelian</th>
-                    <th>Harga</th>
+                    <th>Subtotal</th>
                   </tr>
                   </thead>
                   <tbody>
+                    @php
+                      $total=0;
+                    @endphp
                     @foreach($penjualan as $p)
                       <tr>
                           <td>{{ $p->id_penjualan }}</td>
                           <td>{{ $p->tanggal_penjualan }}</td>
                           <td>{{ $p->nama_barang }}</td>
                           <td>{{ $p->jumlah_pembelian }}</td>
-                          <td>{{ $p->sub_total_harga }}</td>
+                          <td>Rp {{ number_format($p->sub_total_harga,2,',','.')}}</td>
+                          @php
+                            $total=$total+$p->sub_total_harga;
+                          @endphp
                       </tr>
                     @endforeach
                   </tbody>
+                  <tfoot>
+                      <tr>
+                        <th colspan="4">TOTAL</th>
+                        <th>Rp {{ number_format($total,2,',','.')}}</th>
+                      </tr>
+                  </tfoot>
                 </table>
               </div>
               <!-- /.card-body -->
