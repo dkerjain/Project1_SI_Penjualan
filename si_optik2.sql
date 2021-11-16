@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2021 at 06:44 AM
+-- Generation Time: Oct 30, 2021 at 09:19 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -42,8 +42,7 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`id_barang`, `id_kategori`, `nama_barang`, `harga_barang`, `stok_barang`, `foto_barang`, `deskripsi_barang`) VALUES
-('B001', 'K001', 'Kacamata 1', 10000, 7, '/Foto_Barang/1634976162-logo_himasi.png', 'adwd'),
-('B002', 'K002', 'Lensa 1', 150000, 14, '/Foto_Barang/1634974765-logo unair.png', 'ssvcs');
+('B001', 'K001', 'Kacamata Frame Hitam', 50000, 9, NULL, '.');
 
 -- --------------------------------------------------------
 
@@ -66,8 +65,7 @@ CREATE TABLE `detail_pemesanan` (
 --
 
 INSERT INTO `detail_pemesanan` (`id_barang`, `id_pemesanan`, `ukuran_lensa`, `jenis_lensa`, `merek_kacamata`, `harga_kacamata`, `jumlah_pemesanan`) VALUES
-('B001', 'PMN211026001', NULL, NULL, NULL, 10000, 1),
-('B002', 'PMN211026001', '1', 'qwerty', NULL, 150000, 1);
+('B001', 'PMN211030001', '-0.5', 'Minus', NULL, 50000, 1);
 
 --
 -- Triggers `detail_pemesanan`
@@ -91,13 +89,6 @@ CREATE TABLE `detail_penjualan` (
   `jumlah_pembelian` int(11) DEFAULT NULL,
   `sub_total_harga` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `detail_penjualan`
---
-
-INSERT INTO `detail_penjualan` (`id_penjualan`, `id_barang`, `jumlah_pembelian`, `sub_total_harga`) VALUES
-('21102601', 'B001', 2, 20000);
 
 --
 -- Triggers `detail_penjualan`
@@ -126,7 +117,9 @@ CREATE TABLE `jabatan` (
 
 INSERT INTO `jabatan` (`id_jabatan`, `nama_jabatan`) VALUES
 ('J001', 'Admin'),
-('J002', 'Kasir');
+('J002', 'Kasir'),
+('J003', 'Pemilik'),
+('J004', 'Manager');
 
 -- --------------------------------------------------------
 
@@ -144,8 +137,7 @@ CREATE TABLE `kategori` (
 --
 
 INSERT INTO `kategori` (`id_kategori`, `jenis_kategori`) VALUES
-('K001', 'Kacamata'),
-('K002', 'Lensa');
+('K001', 'Kacamata');
 
 -- --------------------------------------------------------
 
@@ -204,9 +196,9 @@ CREATE TABLE `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id_pegawai`, `id_jabatan`, `nama_pegawai`, `alamat_pegawai`, `jenis_kelamin`, `no_tlp`, `username`, `pasword`) VALUES
-('P001', 'J001', 'Teguh', 'Gresik', 0, '082778412', 'teguh123', '123'),
-('P002', 'J002', 'Adit', 'Sidoarjo', 0, '083876667902', 'adit123', '123'),
-('P003', 'J001', 'Rista', 'Surabaya', 1, '086787142562', 'rista', '123');
+('P007', 'J001', 'admin', 'Surabaya', 0, '089112321123', 'admin', '123'),
+('P008', 'J002', 'Kasir', 'Gresik', 1, '087112134505', 'kasir', '123'),
+('P009', 'J003', 'Pemilik', 'Sidoarjo', 0, '085671543111', 'pemilik', '123');
 
 -- --------------------------------------------------------
 
@@ -231,9 +223,7 @@ CREATE TABLE `pembayaran` (
 --
 
 INSERT INTO `pembayaran` (`id_pembayaran`, `id_pegawai`, `id_pemesanan`, `id_penjualan`, `tanggal_pembayaran`, `total_bayar`, `jumlah_bayar`, `sisa`, `created_at`) VALUES
-('PMR211026001', 'P003', 'PMN211026001', NULL, '2021-10-26 11:39:34', 160000, 80000, 80000, '2021-10-26'),
-('PMR211026002', 'P003', NULL, '21102601', '2021-10-26 11:41:45', 20000, 20000, NULL, '2021-10-26'),
-('PMR211026003', 'P003', 'PMN211026001', NULL, '2021-10-26 11:42:04', 160000, 80000, 0, '2021-10-26');
+('PMR211030001', 'P009', 'PMN211030001', NULL, '2021-10-30 02:17:59', 50000, 10000, 40000, '2021-10-30');
 
 --
 -- Triggers `pembayaran`
@@ -257,7 +247,10 @@ DELIMITER ;
 
 CREATE TABLE `pemeriksaan` (
   `id_pemeriksaan` varchar(10) NOT NULL,
-  `tanggal_pemeriksaan` datetime DEFAULT NULL,
+  `tanggal_pemeriksaan` date DEFAULT NULL,
+  `nama_pelanggan` varchar(100) NOT NULL,
+  `alamat_pelanggan` varchar(100) NOT NULL,
+  `no_telfon` varchar(13) NOT NULL,
   `hasil_pemeriksaan` varchar(25) DEFAULT NULL,
   `created_at` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -266,9 +259,10 @@ CREATE TABLE `pemeriksaan` (
 -- Dumping data for table `pemeriksaan`
 --
 
-INSERT INTO `pemeriksaan` (`id_pemeriksaan`, `tanggal_pemeriksaan`, `hasil_pemeriksaan`, `created_at`) VALUES
-('PMR2110250', '2021-10-25 00:00:00', 'kiri', '2021-10-25'),
-('PMR2110260', '2021-10-26 00:00:00', 'Kiri : -1 ; Kanan : 0', '2021-10-26');
+INSERT INTO `pemeriksaan` (`id_pemeriksaan`, `tanggal_pemeriksaan`, `nama_pelanggan`, `alamat_pelanggan`, `no_telfon`, `hasil_pemeriksaan`, `created_at`) VALUES
+('PM21103001', '2021-10-30', 'Bambang', 'Gresik', '089765123111', 'Kiri : -1 ; Kanan : -0,5', '2021-10-30'),
+('PM21103002', '2021-10-30', 'Sumariono', 'Surabaya', '089123656121', 'Kanan : 0 ; Kiri : -1', '2021-10-30'),
+('PM21103003', '2021-10-30', 'Teguh', 'Gresik', '089162314111', 'Kanan : normal ; Kiri : -', '2021-10-30');
 
 --
 -- Triggers `pemeriksaan`
@@ -277,9 +271,9 @@ DELIMITER $$
 CREATE TRIGGER `ID_PEMERIKSAAN` BEFORE INSERT ON `pemeriksaan` FOR EACH ROW BEGIN
     declare nr integer default 0;
     set nr=(SELECT COUNT(id_pemeriksaan) from pemeriksaan where DAY(created_at) = DAY(CURRENT_TIMESTAMP) AND MONTH(created_at) = MONTH(CURRENT_TIMESTAMP) AND YEAR(created_at) = YEAR(CURRENT_TIMESTAMP)) + 1;
-    set new.id_pemeriksaan= concat("PMR",RIGHT(YEAR(CURRENT_TIMESTAMP), 2),
+    set new.id_pemeriksaan= concat("PM",RIGHT(YEAR(CURRENT_TIMESTAMP), 2),
     LPAD(MONTH(CURRENT_TIMESTAMP),2,'0'),
-    LPAD(DAY(CURRENT_TIMESTAMP),2,'0'), LPAD((select nr), 3, '0'));
+    LPAD(DAY(CURRENT_TIMESTAMP),2,'0'), LPAD((select nr), 2, 0));
 END
 $$
 DELIMITER ;
@@ -307,7 +301,7 @@ CREATE TABLE `pemesanan` (
 --
 
 INSERT INTO `pemesanan` (`id_pemesanan`, `id_pegawai`, `id_pemeriksaan`, `tanggal_pemesanan`, `tanggal_selesai_pemesanan`, `total_biaya`, `status_pemesanan`, `status_pembayaran`, `created_at`) VALUES
-('PMN211026001', 'P003', 'PMR2110250', '2021-10-26', NULL, 160000, '0', '0', '2021-10-26');
+('PMN211030001', 'P009', 'PM21103003', '2021-10-30', NULL, 50000, '1', '1', '2021-10-30');
 
 --
 -- Triggers `pemesanan`
@@ -335,13 +329,6 @@ CREATE TABLE `penjualan` (
   `tanggal_penjualan` datetime DEFAULT NULL,
   `total_harga` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `penjualan`
---
-
-INSERT INTO `penjualan` (`id_penjualan`, `id_pegawai`, `tanggal_penjualan`, `total_harga`) VALUES
-('21102601', 'P003', '2021-10-26 11:41:45', 20000);
 
 --
 -- Indexes for dumped tables

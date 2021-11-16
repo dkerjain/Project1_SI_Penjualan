@@ -23,6 +23,8 @@ class pemesananContoller extends Controller
         }else{
 
             $pemeriksaan = DB::table('pemeriksaan')->get();
+            
+            
             $pemesanan   = DB::table('pemesanan')->join('pegawai as p','pemesanan.id_pegawai','p.id_pegawai')
                            ->join('pembayaran as pb','pemesanan.id_pemesanan','pb.id_pemesanan')
                            ->join('pemeriksaan as pm','pemesanan.id_pemeriksaan','pm.id_pemeriksaan')
@@ -34,15 +36,17 @@ class pemesananContoller extends Controller
         }
     }
 
-    public function input(){
+    public function input(Request $request, $id){
         if(!Session::get('/Login')){
             return redirect('/');
         }else{
+         
+            $pemeriksaan = $id;
+            // dd($pemeriksaan);
 
-            $pemeriksaan = Db::table('pemeriksaan')->get();
             $barang      = Barang::join('kategori as k','barang.id_kategori','k.id_kategori')->get();
            
-            return view ('konten/transaksi/inputPemesanan')->with(compact('pemeriksaan','barang'));
+            return view ('konten/transaksi/inputPemesanan',['pemeriksaan'=>$pemeriksaan, 'barang'=>$barang]);
         }
     }
 
@@ -122,11 +126,20 @@ class pemesananContoller extends Controller
         $pemesanan = DB::table('pemesanan')
         ->where('id_pemesanan', $id)->get();
         $pegawai = DB::table('pegawai')->get();
+        $pemeriksaan = DB::table('pemeriksaan')->get();
         $detail_pemesanan = DB::table('detail_pemesanan')->get();
         $barang = DB::table('barang')->get();
         
-        $pdf = \PDF::loadview('/konten/transaksi/notapemesanan', compact('pemesanan', 'id', 'pegawai', 'detail_pemesanan', 'barang'))->setPaper('A5');
+        $pdf = \PDF::loadview('/konten/transaksi/notapemesanan', compact('pemesanan','pemeriksaan', 'id', 'pegawai', 'detail_pemesanan', 'barang'))->setPaper('A5');
         return $pdf->stream('NOTA'.$id.'.pdf');
+
+    }
+
+    public function nonAktif(Request $request, $id){
+        DB::table('pemesanan')->where('id_pemesanan',$id)->update([
+            'status_pemesanan' => 2,
+            ]);
+            return redirect('/pemesanan')->with('delete','delete');
 
     }
 }

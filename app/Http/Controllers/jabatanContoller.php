@@ -41,4 +41,13 @@ class jabatanContoller extends Controller
             return back()->with('update','update');
         }
     }
+
+    public function hapus(Request $request, $id){
+        if(!Session::get('/Login')){
+            return redirect('/');
+        }else{
+            DB::table('jabatan')->where('id_jabatan', $id)->delete();
+            return back()->with('delete','delete');
+        }
+    }
 }

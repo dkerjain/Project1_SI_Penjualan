@@ -46,7 +46,7 @@
                             <td>{{ $peg->nama_pegawai }}</td>
                           @endif
                         @endforeach
-                        <td>Rp. {{number_format($p->total_harga)}}</td>
+                        <td>Rp {{ number_format($p->total_harga,2,',','.')}}</td>
                         <td style="text-align:center">
                           <a href="" data-toggle="modal" data-target="#modal-edit{{ $p->id_penjualan }}" style="margin:5px;"><i class="nav-icon fas fa-bars" ></i></a>
                           <a href="/notaPenjualan/{{ $p->id_penjualan }}" target="_blank" ><i class="nav-icon fas fa-print" ></i></a>
