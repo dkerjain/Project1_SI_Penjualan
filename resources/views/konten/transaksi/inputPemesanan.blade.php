@@ -275,7 +275,7 @@ $(document).ready(function() {
         var cell7 = row.insertCell(6);
 		console.log(index);
 
-		cell1.innerHTML = '<input type="hidden" name="id['+barang[index]["id_barang"]+']" value="'+barang[index]["id_barang"]+'">'+barang[index]["nama_barang"];
+		cell1.innerHTML = '<input type="hidden" name="id['+barang[index]["id_barang"]+']" value="'+bara3ng[index]["id_barang"]+'">'+barang[index]["nama_barang"];
 
 		cell2.innerHTML = '<input type="number" readonly id="harga'+barang[index]["id_barang"]+'" name="harga['+barang[index]["id_barang"]+']" value="'+barang[index]["harga_barang"]+'" oninput="recount(\''+barang[index]["id_barang"]+'\')"style="background:transparent; border:none; text-align:left; width=100%">';
 
