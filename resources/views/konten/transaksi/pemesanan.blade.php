@@ -20,9 +20,6 @@
                 <div class="col-10">
                     <h3 class="card-title mt-3"><b>Data Pemesanan</b></h3>
                 </div>
-                <div class="col-2">
-                  <a href="/inputPemesanan"><button  class="btn btn-primary btn-block">Tambah Pemesanan</button></a>
-                </div>
             </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -45,6 +42,7 @@
               </thead>
               <tbody>
                 @foreach($pemesanan as $p)
+                @if  ($p->status_pemesanan != 2)
                   <tr>
                     <!-- Code Menampilkan Data -->
                     <td>{{$p->id_pemesanan}}</td>
@@ -64,8 +62,10 @@
                     <td>
                       @if($p->status_pemesanan == 0)
                         Pemesanan Selesai
-                      @else
+                      @elseif($p->status_pemesanan == 1)
                         Proses
+                      @else
+                        Telah Dihapus
                       @endif
                     </td>
                     <td>
@@ -78,11 +78,13 @@
                     <td style="text-align:center">
                       <a href="" data-toggle="modal" data-target=".editpemesanan{{$p->id_pemesanan}}"><i class="nav-icon fas fa-bars" ></i></a>
                       <a href="/notaPemesanan/{{ $p->id_pemesanan }}" target="_blank" ><i class="nav-icon fas fa-print" ></i></a>
+                      <a href="/hapus/{{$p->id_pemesanan}}" target="_blank" ><i class="nav-icon fas fa-trash" ></i></a>
                     </td>
                     
                     
               
                   </tr>
+                  @endif
                 @endforeach
               </tbody>
             </table>
@@ -148,7 +150,7 @@
                 </thead>
                 <tbody>
                   @foreach($detail as $d)
-                    @if($p->id_pemesanan == $d->id_pemesanan)
+                    @if(($p->id_pemesanan == $d->id_pemesanan) )
                       <tr>
                         <td>{{$loop->iteration}}</td>
                         <td>{{$d->nama_barang}}</td>
@@ -267,6 +269,18 @@
           position: 'center',
           icon: 'success',
           title: 'Data Pemesanan Berhasil Disimpan',
+          showConfirmButton: false,
+          timer: 2000
+      }); 
+  </script>
+@endif
+
+@if (session('delete'))
+  <script>
+      Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Data Jabatan Berhasil Dihapus',
           showConfirmButton: false,
           timer: 2000
       }); 

@@ -72,6 +72,10 @@
         p.mix {
 			border-style: dotted dashed solid double;
 		}
+        b{            
+            margin:6px;
+            margin-bottom:15px;
+        }
     </style>
 </head>
     @foreach($pemesanan as $p)
@@ -83,17 +87,26 @@
                     
                     <thead>
                         <tr>
-                            <th colspan="4">Invoice <strong># {{ $p-> id_pemesanan }}</strong></th>
+                            <th colspan="4">Invoice Pemesanan <strong># {{ $p-> id_pemesanan }}</strong></th>
                             <th colspan="2">{{\Carbon\Carbon::parse($p->tanggal_pemesanan)->translatedFormat('l, d F Y')}}</th>
                         </tr>
                         <tr>
-                            <td colspan="5">
+                            <td colspan="4">
                                 <h4>Store : </h4>
                                 <p>Rumah Optik Sukodono<br>
                                     Jl. Yani No. 25 Karangnongko-Sukodono-Sidoarjo<br>
                                     085733518686
                                 </p>
                             </td>
+                            @foreach($pemeriksaan as $pk)                         
+                                 @if (($p->id_pemeriksaan) == ($pk->id_pemeriksaan))
+                                    <td colspan="2">
+                                        <h4>Pembeli : </h4>
+                                        <p> {{ $pk->nama_pelanggan}} <br><br><br>
+                                        </p>
+                                    </td>
+                                    @endif
+                            @endforeach
                         </tr>
                         <tr>
                             @foreach($pegawai as $peg)                         
@@ -138,8 +151,9 @@
                     </tfoot>
                 </table>
                 
-                <span>Terimakasih Telah Berbelanja,</span>
-                <table  >
+                <span>Terimakasih Telah Berbelanja,</span><br>
+                <span><b> *Nota ini harap dibawah ketika pengambilan barang </b></span>
+                <table >
                     <tr  align="center">
                         <td>Penerima
                             <br><br><br>(.....................)<br>

@@ -51,24 +51,74 @@
                   <tr>
                     <th>ID Pemesanan</th>
                     <th>Tanggal Pemesanan</th>
+                    <th>Total Pemesanan</th>
+                    <th>Tanggal DP</th>
+                    <th>Total DP</th>
                     <th>Tanggal Pelunasan</th>
+                    <th>Total Pelunasan</th>
                     <th>Jumlah Bayar</th>
                   </tr>
                   </thead>
                   <tbody>
+                    @php
+                      $total=0;
+                    @endphp
                     @foreach($pemesanan as $p)
+                      @if($p->status_pembayaran == 0)
                       <tr>
                           <td>{{ $p->id_pemesanan }}</td>
                           <td>{{ \Carbon\Carbon::parse($p->tanggal_pemesanan)->translatedFormat('d M Y ') }}</td>
-                          @foreach($pembayaran as $pb)
+                          <td>Rp {{ number_format($p->total_biaya,2,',','.')}}</td>
+                          @foreach($pembayaran1 as $pb1)
+                          @if($pb1->id_pemesanan == $p->id_pemesanan)
+                            <td>{{ \Carbon\Carbon::parse($pb1->tanggal_pembayaran)->translatedFormat('d M Y h:i:s') }}</td>
+                            <td>Rp {{ number_format($pb1->jumlah_bayar,2,',','.')}}</td>
+                          @endif
+                          @endforeach
+
+                          @foreach($pembayaran2 as $pb2)
+                          @if($pb2->id_pemesanan == $p->id_pemesanan)
+                            <td>{{ \Carbon\Carbon::parse($pb2->tanggal_pembayaran)->translatedFormat('d M Y h:i:s') }}</td>
+                          @endif
+                          @endforeach
+
+                          @foreach($pembayaran1 as $pb1)
+                          @if($pb1->id_pemesanan == $p->id_pemesanan)
+                            <td>Rp {{ number_format($pb1->sisa,2,',','.')}}</td>
+                          @endif
+                          @endforeach
+                          <td>Rp {{ number_format($p->total_biaya,2,',','.')}}</td>
+                          @php
+                            $total=$total+$p->total_biaya;
+                          @endphp
+                      </tr>
+                      @elseif($p->status_pembayaran == 1)
+                      <tr>
+                          <td>{{ $p->id_pemesanan }}</td>
+                          <td>{{ \Carbon\Carbon::parse($p->tanggal_pemesanan)->translatedFormat('d M Y ') }}</td>
+                          <td>Rp {{ number_format($p->total_biaya,2,',','.')}}</td>
+                          @foreach($pembayaran1 as $pb)
                           @if($pb->id_pemesanan == $p->id_pemesanan)
-                          <td>{{ \Carbon\Carbon::parse($pb->tanggal_pembayaran)->translatedFormat('d M Y h:i:s') }}</td>
-                          <td>{{ $pb->jumlah_bayar }}</td>
+                            <td>{{ \Carbon\Carbon::parse($pb->tanggal_pembayaran)->translatedFormat('d M Y h:i:s') }}</td>
+                            <td>Rp {{ number_format($pb->jumlah_bayar,2,',','.')}}</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>Rp {{ number_format($pb->jumlah_bayar,2,',','.')}}</td>
+                            @php
+                              $total=$total+$pb->jumlah_bayar;
+                            @endphp
                           @endif
                           @endforeach
                       </tr>
+                      @endif
                     @endforeach
                   </tbody>
+                  <tfoot>
+                      <tr>
+                        <th colspan="7">TOTAL BAYAR</th>
+                        <th>Rp {{ number_format($total,2,',','.')}}</th>
+                      </tr>
+                  </tfoot>
                 </table>
               </div>
               <!-- /.card-body -->

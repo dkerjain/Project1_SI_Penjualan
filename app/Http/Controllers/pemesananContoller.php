@@ -36,17 +36,17 @@ class pemesananContoller extends Controller
         }
     }
 
-    public function input(){
+    public function input(Request $request, $id){
         if(!Session::get('/Login')){
             return redirect('/');
         }else{
-
-            $pemeriksaan = Pemeriksaan::select('id_pemeriksaan')->max('id_pemeriksaan');
+         
+            $pemeriksaan = $id;
             // dd($pemeriksaan);
 
             $barang      = Barang::join('kategori as k','barang.id_kategori','k.id_kategori')->get();
            
-            return view ('konten/transaksi/inputPemesanan')->with(compact('pemeriksaan','barang'));
+            return view ('konten/transaksi/inputPemesanan',['pemeriksaan'=>$pemeriksaan, 'barang'=>$barang]);
         }
     }
 
@@ -126,11 +126,20 @@ class pemesananContoller extends Controller
         $pemesanan = DB::table('pemesanan')
         ->where('id_pemesanan', $id)->get();
         $pegawai = DB::table('pegawai')->get();
+        $pemeriksaan = DB::table('pemeriksaan')->get();
         $detail_pemesanan = DB::table('detail_pemesanan')->get();
         $barang = DB::table('barang')->get();
         
-        $pdf = \PDF::loadview('/konten/transaksi/notapemesanan', compact('pemesanan', 'id', 'pegawai', 'detail_pemesanan', 'barang'))->setPaper('A5');
+        $pdf = \PDF::loadview('/konten/transaksi/notapemesanan', compact('pemesanan','pemeriksaan', 'id', 'pegawai', 'detail_pemesanan', 'barang'))->setPaper('A5');
         return $pdf->stream('NOTA'.$id.'.pdf');
+
+    }
+
+    public function nonAktif(Request $request, $id){
+        DB::table('pemesanan')->where('id_pemesanan',$id)->update([
+            'status_pemesanan' => 2,
+            ]);
+            return redirect('/pemesanan')->with('delete','delete');
 
     }
 }

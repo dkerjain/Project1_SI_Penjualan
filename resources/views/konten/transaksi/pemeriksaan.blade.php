@@ -48,7 +48,10 @@
                       <td> {{$p->no_telfon}}</td>
                       <td>{{\Carbon\Carbon::parse($p->tanggal_pemeriksaan)->translatedFormat('l, d F Y')}}</td>
                       <td>{{$p->hasil_pemeriksaan}}</td>
-                      <td style="text-align:center" data-toggle="modal" data-target=".editpemeriksaan{{$p->id_pemeriksaan}}"><i class="nav-icon fas fa-edit" ></i></td>
+                      <td style="text-align:center">
+                        <i class="nav-icon fas fa-edit" data-toggle="modal" data-target=".editpemeriksaan{{$p->id_pemeriksaan}}"></i>
+                        <a href="/inputPemesanan/{{$p->id_pemeriksaan}}"><i class="nav-icon fas fa-shopping-cart"></i></a>
+                      </td>
                   </tr>
                 @endforeach
               </tbody>
