@@ -26,13 +26,14 @@ class barangContoller extends Controller
         if(!Session::get('/Login')){
             return redirect('/');
         }else{
-            $path = null; 
             if($request->foto)
             {
                 $foto = $request->file('foto');
                 $path = '/Foto_Barang/'.time().'-'.$foto->getClientOriginalName();
                 // dd($path);
                 $foto->move(public_path('Foto_Barang'), $path);
+            }else{
+                $path = null;
             }
 
             DB::table('barang')->insert([

@@ -57,10 +57,11 @@ class pemesananContoller extends Controller
 
             $tgl = Carbon::now()->format('Y-m-d h:i:s');
             DB::table('pemesanan')->insert([
-                'id_pegawai'            => Session::get('id_pegawai'),
-                'id_pemeriksaan'        => $request->pemeriksaan,
-                'tanggal_pemesanan'     => $request->tgl_pemesanan,
-                'total_biaya'           => $request->total
+                'id_pegawai'                => Session::get('id_pegawai'),
+                'id_pemeriksaan'            => $request->pemeriksaan,
+                'tanggal_pemesanan'         => $request->tgl_pemesanan,
+                'tanggal_selesai_pemesanan' => $request->tgl_selesai,
+                'total_biaya'               => $request->total
             ]);
 
             $ID_PEMESANAN = DB::table('pemesanan')->max('id_pemesanan');

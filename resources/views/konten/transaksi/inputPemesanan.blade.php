@@ -23,17 +23,17 @@
       </div><!-- /.container-fluid -->
     </section>
 
-<section class="content">
+    <section class="content">
         <div class="container-fluid">
         <form action="/pemesanan/inputPemesanan/submit" method="post" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
         {{ @csrf_field() }}
 
             <!-- Tanggal dan Pegawai -->
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Tanggal</h3>
+                            <h3 class="card-title">Tanggal Pesan</h3>
                         </div>
                         <div class="input-group date p-3" id="reservationdate" data-target-input="nearest">
                             <input type="date" class="form-control datetimepicker-input disabled" id="tgl_pemesanan" name="tgl_pemesanan" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}" data-target="#reservationdate"/>
@@ -41,13 +41,24 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Tanggal Selesai</h3>
+                        </div>
+                        <div class="input-group date p-3" id="reservationdate" data-target-input="nearest">
+                            <input type="date" class="form-control datetimepicker-input disabled" id="tgl_selesai" name="tgl_selesai" value="{{\Carbon\Carbon::now()->format('Y-m-d')}}" data-target="#reservationdate"/>
+                        </div>     
+                    </div>
+                </div>
+
+                <div class="col-md-4">
                     <div class="card ">
                         <div class="card-header">
                             <h3 class="card-title">Pegawai</h3>
                         </div>
 
-                        <div class="card-body">
+                        <div class="input-group date p-3" id="reservationdate" data-target-input="nearest">
                             <input type="text" name="pegawai" id="pegawai" class="form-control" readonly value="{{ Session::get('nama_pegawai') }}"/>
                         </div>
                         <!-- /.card-body -->

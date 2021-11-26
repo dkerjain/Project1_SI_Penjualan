@@ -29,11 +29,12 @@
                   <th>ID Pemesanan</th>
                   <th>ID Pemeriksaan</th>
                   <th>Tanggal Pesan</th>
+                  <th>Tanggal Selesai</th>
                   <th>Pegawai</th>
                   <th>Nama Pelanggan</th>
                   <th>Alamat Pelanggan</th>
-                  <th>No Telp Pelanggan</th>
                   <th>Total Biaya</th>
+                  <th>No Telp Pelanggan</th>
                   <th>Status Pemesanan</th>
                   <th>Status Pembayaran</th>
                   <th>Action</th>
@@ -48,17 +49,16 @@
                     <td>{{$p->id_pemesanan}}</td>
                     <td>{{$p->id_pemeriksaan}}</td>
                     <td>{{$p->tanggal_pemesanan}}</td>
+                    <td>{{$p->tanggal_selesai_pemesanan}}</td>
                     <td>{{$p->nama_pegawai}}</td>
                     @foreach($pemeriksaan as $pe)
-                    @if($p->id_pemeriksaan == $pe->id_pemeriksaan)
-                    
-                    <td>{{$pe->nama_pelanggan}}</td>
-                    <td>{{$pe->alamat_pelanggan}}</td>
+                      @if($p->id_pemeriksaan == $pe->id_pemeriksaan)
+                        <td>{{$pe->nama_pelanggan}}</td>
+                        <td>{{$pe->alamat_pelanggan}}</td>
+                        <td>Rp {{ number_format($p->total_biaya,2,',','.') }}</td>
+                        @endif
+                    @endforeach    
                     <td>{{$p->no_telfon}}</td>
-                    @endif
-                    @endforeach
-                    
-                    <td>Rp {{ number_format($p->total_biaya,2,',','.') }}</td>
                     <td>
                       @if($p->status_pemesanan == 0)
                         Pemesanan Selesai
