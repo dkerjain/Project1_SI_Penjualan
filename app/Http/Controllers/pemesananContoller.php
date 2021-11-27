@@ -61,7 +61,8 @@ class pemesananContoller extends Controller
                 'id_pemeriksaan'            => $request->pemeriksaan,
                 'tanggal_pemesanan'         => $request->tgl_pemesanan,
                 'tanggal_selesai_pemesanan' => $request->tgl_selesai,
-                'total_biaya'               => $request->total
+                'total_biaya'               => $request->total,
+                'status_barang'             => 0
             ]);
 
             $ID_PEMESANAN = DB::table('pemesanan')->max('id_pemesanan');
@@ -86,6 +87,18 @@ class pemesananContoller extends Controller
             ]);
 
             return redirect('pemesanan')->with('success','success'); 
+        }
+    }
+
+
+    public function ubahSatusOrder(Request $request){
+        if(!Session::get('/Login')){
+            return redirect('/');
+        }else{
+            DB::table('pemesanan')->update([
+                'status_barang'             => 1
+            ]);
+            return redirect('/pemesanan')->with('success','success'); 
         }
     }
 

@@ -35,6 +35,7 @@
                   <th>Alamat Pelanggan</th>
                   <th>Total Biaya</th>
                   <th>No Telp Pelanggan</th>
+                  <th>Status Barang</th>
                   <th>Status Pemesanan</th>
                   <th>Status Pembayaran</th>
                   <th>Action</th>
@@ -60,6 +61,13 @@
                     @endforeach    
                     <td>{{$p->no_telfon}}</td>
                     <td>
+                      @if($p->status_barang == 0)
+                        Order
+                      @else
+                        Ready
+                      @endif
+                    </td>
+                    <td>
                       @if($p->status_pemesanan == 0)
                         Pemesanan Selesai
                       @elseif($p->status_pemesanan == 1)
@@ -76,6 +84,9 @@
                       @endif
                     </td>
                     <td style="text-align:center">
+                      @if($p->status_barang == 0)
+                        <a href="/pemesanan/ubahOrder" target="_blank" ><i class="nav-icon fas fa-check-double" ></i></a>
+                      @endif
                       <a href="" data-toggle="modal" data-target=".editpemesanan{{$p->id_pemesanan}}"><i class="nav-icon fas fa-bars" ></i></a>
                       <a href="/notaPemesanan/{{ $p->id_pemesanan }}" target="_blank" ><i class="nav-icon fas fa-print" ></i></a>
                       <a href="/hapus/{{$p->id_pemesanan}}" target="_blank" ><i class="nav-icon fas fa-trash" ></i></a>
