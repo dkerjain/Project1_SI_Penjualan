@@ -55,35 +55,83 @@ class pemesananContoller extends Controller
             return redirect('/');
         }else{
 
+            $total_biaya = null;
+            $res= explode(".",$request->total);
+            
+            for($i=0; $i<count($res); $i++){
+                if($i == 0){
+                    $total_biaya = $res[$i];
+                }
+                else{
+                    $total_biaya = $total_biaya.$res[$i];
+                }
+            }
+
             $tgl = Carbon::now()->format('Y-m-d h:i:s');
             DB::table('pemesanan')->insert([
                 'id_pegawai'                => Session::get('id_pegawai'),
                 'id_pemeriksaan'            => $request->pemeriksaan,
                 'tanggal_pemesanan'         => $request->tgl_pemesanan,
                 'tanggal_selesai_pemesanan' => $request->tgl_selesai,
-                'total_biaya'               => $request->total,
+                'total_biaya'               => $total_biaya,
                 'status_barang'             => 0
             ]);
 
             $ID_PEMESANAN = DB::table('pemesanan')->max('id_pemesanan');
+
             foreach ($request['id'] as $key) {
+
+                $harga_kacamata = null;
+                $res2= explode(".",$request->subtotal[$key]);
+                
+                for($i=0; $i<count($res2); $i++){
+                    if($i == 0){
+                        $harga_kacamata = $res2[$i];
+                    }
+                    else{
+                        $harga_kacamata = $harga_kacamata.$res2[$i];
+                    }
+                }
+
                 DB::table('detail_pemesanan')->insert([
                     'id_barang'             => $key,
                     'id_pemesanan'          => $ID_PEMESANAN,
                     'ukuran_lensa'          => $request->ukuran_lensa[$key],
                     'jenis_lensa'           => $request->jenis_lensa[$key],
-                    'harga_kacamata'        => $request->subtotal[$key],
+                    'harga_kacamata'        => $harga_kacamata,
                     'jumlah_pemesanan'      => $request->qty[$key]
                 ]);
+            }
+
+            $jumlah_bayar = null;
+            $res3= explode(".",$request->bayar);
+            for($i=0; $i<count($res3); $i++){
+                if($i == 0){
+                    $jumlah_bayar = $res3[$i];
+                }
+                else{
+                    $jumlah_bayar = $jumlah_bayar.$res3[$i];
+                }
+            }
+
+            $sisa = null;
+            $res4= explode(".",$request->sisa);
+            for($i=0; $i<count($res4); $i++){
+                if($i == 0){
+                    $sisa = $res4[$i];
+                }
+                else{
+                    $sisa = $sisa.$res4[$i];
+                }
             }
 
             DB::table('pembayaran')->insert([
                 'id_pegawai'            => Session::get('id_pegawai'),
                 'id_pemesanan'          => $ID_PEMESANAN,
                 'tanggal_pembayaran'    => $tgl,
-                'total_bayar'           => $request->total,
-                'jumlah_bayar'          => $request->bayar,
-                'sisa'                  => $request->sisa
+                'total_bayar'           => $total_biaya,
+                'jumlah_bayar'          => $jumlah_bayar,
+                'sisa'                  => $sisa
             ]);
 
             return redirect('pemesanan')->with('success','success'); 

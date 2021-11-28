@@ -277,6 +277,8 @@ $(document).ready(function() {
 		var id = 'col'+colnum;
 		colnum++;
 
+        let rupiah = Intl.NumberFormat('id-ID');
+
 		var cell1 = row.insertCell(0);
 		var cell2 = row.insertCell(1);
 		var cell3 = row.insertCell(2);
@@ -286,17 +288,17 @@ $(document).ready(function() {
         var cell7 = row.insertCell(6);
 		console.log(index);
 
-		cell1.innerHTML = '<input type="hidden" name="id['+barang[index]["id_barang"]+']" value="'+bara3ng[index]["id_barang"]+'">'+barang[index]["nama_barang"];
+		cell1.innerHTML = '<input type="hidden" name="id['+barang[index]["id_barang"]+']" value="'+barang[index]["id_barang"]+'">'+barang[index]["nama_barang"];
 
-		cell2.innerHTML = '<input type="number" readonly id="harga'+barang[index]["id_barang"]+'" name="harga['+barang[index]["id_barang"]+']" value="'+barang[index]["harga_barang"]+'" oninput="recount(\''+barang[index]["id_barang"]+'\')"style="background:transparent; border:none; text-align:left; width=100%">';
-
+		cell2.innerHTML = '<input type="hidden" id="harga'+barang[index]["id_barang"]+'" name="harga['+barang[index]["id_barang"]+']" value="'+barang[index]["harga_barang"]+'" oninput="recount(\''+barang[index]["id_barang"]+'\')" style="background:transparent; border:none; text-align:left; width=100%">'+rupiah.format(barang[index]["harga_barang"]);
+        
         cell3.innerHTML = '<input type="number" step="any" id="ukuran_lensa'+barang[index]["id_barang"]+'" name="ukuran_lensa['+barang[index]["id_barang"]+']" oninput="recount(\''+barang[index]["id_barang"]+'\')">';
 
         cell4.innerHTML = '<input type="text" id="jenis_lensa'+barang[index]["id_barang"]+'" name="jenis_lensa['+barang[index]["id_barang"]+']" oninput="recount(\''+barang[index]["id_barang"]+'\')">';
 
 		cell5.innerHTML = '<input type="number" name="qty['+barang[index]["id_barang"]+']" value="1" min="0" max="'+barang[index]["stok_barang"]+'" oninput="recount(\''+barang[index]["id_barang"]+'\')" id="qty'+barang[index]["id_barang"]+'" style="background:transparent; border:none; text-align:left; width=100%">';	
 
-		cell6.innerHTML = '<input type="hidden" class="subtotal" name="subtotal['+barang[index]["id_barang"]+']" value="'+barang[index]["harga_barang"]+'" id="subtotal'+barang[index]["id_barang"]+'"><span id="subtotalval'+barang[index]["id_barang"]+'">'+barang[index]["harga_barang"]+'</span>';
+		cell6.innerHTML = '<input type="hidden" class="subtotal" name="subtotal['+barang[index]["id_barang"]+']" value="'+barang[index]["harga_barang"]+'" id="subtotal'+barang[index]["id_barang"]+'"><span id="subtotalval'+barang[index]["id_barang"]+'">'+rupiah.format(barang[index]["harga_barang"])+'</span>'
 
 		cell7.innerHTML = '<i class="icon-copy fa fa-trash" onclick="hapusEl(\''+id+'\')" style="cursor:pointer"> Del</i>';
 
@@ -324,27 +326,46 @@ $(document).ready(function() {
 		recount(i);
 	}
 	function total(){
+        let rupiah = Intl.NumberFormat('id-ID');
 		var subtotals = document.getElementsByClassName("subtotal");
 		var total = 0;
 		for(var i=0; i<subtotals.length;++i){
 			total += Number(subtotals[i].value); 
 		}
-		document.getElementById("total").value = total;
+		document.getElementById("total").value = rupiah.format(total);
+
+        total = parseInt(total);
+        console.log("total"+total);
 	}
+
+    $("#bayar").keyup(function(){
+            $('#sisa').val(parseInt($("#total").val())-parseInt($('#bayar').val()));
+    });
     function kembali(){
+        let rupiah = Intl.NumberFormat('id-ID');
 
         var total = document.getElementById("total").value;
+        total = parseInt(total.replace(/,.*|[^0-9]/g, ''), 10);
+        console.log("total bawah "+total);
+
         var bayar = document.getElementById("bayar").value;
-        document.getElementById("sisa").value = bayar-total; 
+        bayar = parseInt(bayar.replace(/,.*|[^0-9]/g, ''), 10);
+        console.log("bayar "+bayar);
+
+        document.getElementById("sisa").value = rupiah.format(bayar - total);
+        var sisa =  document.getElementById("sisa").value;
+        console.log("sisa "+sisa);
     }
 
 	function recount(id){
+        let rupiah = Intl.NumberFormat('id-ID');
+        
 		var price = document.getElementById("harga"+id).value;
 		var sembarang = document.getElementById("qty"+id).value;
 
 		var lego = Number(price*sembarang); 
 		document.getElementById("subtotal"+id).value = lego;
-		document.getElementById("subtotalval"+id).innerHTML = lego;
+		document.getElementById("subtotalval"+id).innerHTML = rupiah.format(lego);
 		total();
 	}
 
@@ -355,6 +376,8 @@ $(document).ready(function() {
 	function hapusEl(idCol) {
 		document.getElementById(idCol).remove();
 		total();
+        document.getElementById("bayar").value = 0;
+        document.getElementById("sisa").value = 0;   
 	}
 
 
@@ -436,5 +459,50 @@ $(document).ready(function() {
 });
 </script>
 
-@endsection
+<script type="text/javascript">
+     
+     var bayar = document.getElementById('bayar');
+     bayar.addEventListener('keyup', function(e){
+     // tambahkan 'Rp.' pada saat form di ketik
+     // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+     bayar.value = formatRupiah(this.value);
+    //  console.log("bayar"+bayar);
+     });
 
+     /* Fungsi formatRupiah */
+     function formatRupiah(angka, prefix){
+     var number_string = angka.replace(/[^,\d]/g, '').toString(),
+     split   		= number_string.split(','),
+     sisa     		= split[0].length % 3,
+     rupiah     	    = split[0].substr(0, sisa),
+     ribuan     	    = split[0].substr(sisa).match(/\d{3}/gi);
+
+     // tambahkan titik jika yang di input sudah menjadi angka ribuan
+     if(ribuan){
+         separator = sisa ? '.' : '';
+         rupiah += separator + ribuan.join('.');
+     }
+
+     rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+     return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+     }
+</script>
+<script>
+    $("#bayar").keyup(function(){
+
+        let rupiah = Intl.NumberFormat('id-ID');
+
+        var total = document.getElementById("total").value;
+        total = parseInt(total.replace(/,.*|[^0-9]/g, ''), 10);
+        console.log("total bawah "+total);
+
+        var bayar = document.getElementById("bayar").value;
+        bayar = parseInt(bayar.replace(/,.*|[^0-9]/g, ''), 10);
+        console.log("bayar "+bayar);
+
+        document.getElementById("sisa").value = rupiah.format(-(bayar-total));
+
+    });
+</script>
+
+@endsection
