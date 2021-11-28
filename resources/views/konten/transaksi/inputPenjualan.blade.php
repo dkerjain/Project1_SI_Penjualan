@@ -289,6 +289,8 @@
 		var id = 'col'+colnum;
 		colnum++;
 
+        let rupiah = Intl.NumberFormat('id-ID');
+
 		var cell1 = row.insertCell(0);
 		var cell2 = row.insertCell(1);
 		var cell3 = row.insertCell(2);
@@ -296,9 +298,9 @@
 		var cell5 = row.insertCell(4);
 		console.log(index);
 		cell1.innerHTML = '<input type="hidden" name="id['+barang[index]["id_barang"]+']" value="'+barang[index]["id_barang"]+'">'+barang[index]["nama_barang"];
-		cell2.innerHTML = '<input type="number" id="harga'+barang[index]["id_barang"]+'" name="harga['+barang[index]["id_barang"]+']" value="'+barang[index]["harga_barang"]+'" oninput="recount(\''+barang[index]["id_barang"]+'\')" style="background:transparent; border:none; text-align:left; width=100%">';
+		cell2.innerHTML = '<input type="hidden" id="harga'+barang[index]["id_barang"]+'" name="harga['+barang[index]["id_barang"]+']" value="'+barang[index]["harga_barang"]+'" oninput="recount(\''+barang[index]["id_barang"]+'\')" style="background:transparent; border:none; text-align:left; width=100%">'+rupiah.format(barang[index]["harga_barang"]);
 		cell3.innerHTML = '<input type="number" name="qty['+barang[index]["id_barang"]+']" value="1" min="0" max="'+barang[index]["stok_barang"]+'" oninput="recount(\''+barang[index]["id_barang"]+'\')" id="qty'+barang[index]["id_barang"]+'" style="background:transparent; border:none; text-align:left; width=100%">';	
-		cell4.innerHTML = '<input type="hidden" class="subtotal" name="subtotal['+barang[index]["id_barang"]+']" value="'+barang[index]["harga_barang"]+'" id="subtotal'+barang[index]["id_barang"]+'"><span id="subtotalval'+barang[index]["id_barang"]+'">'+barang[index]["harga_barang"]+'</span>';
+		cell4.innerHTML = '<input type="hidden" class="subtotal" name="subtotal['+barang[index]["id_barang"]+']" value="'+barang[index]["harga_barang"]+'" id="subtotal'+barang[index]["id_barang"]+'"><span id="subtotalval'+barang[index]["id_barang"]+'">'+rupiah.format(barang[index]["harga_barang"])+'</span>';
 		cell5.innerHTML = '<i class="icon-copy fa fa-trash" onclick="hapusEl(\''+id+'\')" style="cursor:pointer"> Del</i>';
 
 		total();
@@ -324,14 +326,17 @@
 		recount(i);
 	}
 	function total(){
+        let rupiah = Intl.NumberFormat('id-ID');
 		var subtotals = document.getElementsByClassName("subtotal");
 		var total = 0;
 		for(var i=0; i<subtotals.length;++i){
 			total += Number(subtotals[i].value); 
 		}
-		document.getElementById("total").value = total;
-        document.getElementById("totalpayment").value = total;
-        document.getElementById("kembalian").value = total-total; 
+		document.getElementById("total").value = rupiah.format(total);
+        document.getElementById("totalpayment").value = rupiah.format(total);
+        document.getElementById("kembalian").value = rupiah.format(Number(total-total)); 
+
+        // total = parseInt(total);
 	}
 
     function kembali(){
@@ -341,12 +346,13 @@
     }
 
 	function recount(id){
+        let rupiah = Intl.NumberFormat('id-ID');
 		var price = document.getElementById("harga"+id).value;
 		var sembarang = document.getElementById("qty"+id).value;
 
 		var lego = Number(price*sembarang); 
 		document.getElementById("subtotal"+id).value = lego;
-		document.getElementById("subtotalval"+id).innerHTML = lego;
+		document.getElementById("subtotalval"+id).innerHTML = rupiah.format(lego);
 		total();
 	}
 

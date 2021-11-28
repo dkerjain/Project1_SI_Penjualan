@@ -43,18 +43,45 @@ class penjualanContoller extends Controller
         $y = date('y');
         $nota_id = str_pad($y,2,"0",STR_PAD_LEFT).str_pad($m,2,"0",STR_PAD_LEFT).str_pad($d,2,"0",STR_PAD_LEFT).str_pad($id,2,"0",STR_PAD_LEFT);
         
+        $total_harga = null;
+        $res= explode(".",$request->total);
+        
+        for($i=0; $i<count($res); $i++){
+            if($i == 0){
+                $total_harga = $res[$i];
+            }
+            else{
+                $total_harga = $total_harga.$res[$i];
+            }
+        }
+
             DB::table('penjualan')->insert([
-	            'id_penjualan'   => $nota_id,
-	            'id_pegawai' => $request->userid,
+	            'id_penjualan'      => $nota_id,
+	            'id_pegawai'        => $request->userid,
                 'tanggal_penjualan' => $tgl,
-                'total_harga'=> $request->total
+                // 'total_harga'=> $request->total
+                'total_harga'       => $total_harga
         	]);
             foreach ($request['id'] as $key) {
-		            DB::table('detail_penjualan')->insert([
-		            'id_penjualan'   => $nota_id,
-		            'id_barang'  => $key,
-		            'jumlah_pembelian' => $request['qty'][$key],
-		            'sub_total_harga'=> $request['subtotal'][$key]
+
+                $sub_total_harga = null;
+                $res2= explode(".",$request['subtotal'][$key]);
+                
+                for($i=0; $i<count($res2); $i++){
+                    if($i == 0){
+                        $sub_total_harga = $res2[$i];
+                    }
+                    else{
+                        $sub_total_harga = $sub_total_harga.$res[$i];
+                    }
+                }
+
+		        DB::table('detail_penjualan')->insert([
+		            'id_penjualan'          => $nota_id,
+		            'id_barang'             => $key,
+		            'jumlah_pembelian'      => $request['qty'][$key],
+		            // 'sub_total_harga'       => $request['subtotal'][$key]
+                    'sub_total_harga'       => $sub_total_harga
 	            ]);
             }
             
@@ -62,8 +89,8 @@ class penjualanContoller extends Controller
                 'id_pegawai' => $request->userid,
                 'id_penjualan' => $nota_id,
                 'tanggal_pembayaran' => $tgl,
-                'total_bayar' => $request->total,
-                'jumlah_bayar' => $request->total
+                'total_bayar' => $total_harga,
+                'jumlah_bayar' => $total_harga
             ]);
         
         return redirect('penjualan')->with('success','success'); 

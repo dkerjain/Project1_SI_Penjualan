@@ -331,10 +331,6 @@ $(document).ready(function() {
 		}
 		document.getElementById("total").value = total;
 	}
-
-    $("#bayar").keyup(function(){
-            $('#sisa').val(parseInt($("#total").val())-parseInt($('#bayar').val()));
-    });
     function kembali(){
 
         var total = document.getElementById("total").value;
