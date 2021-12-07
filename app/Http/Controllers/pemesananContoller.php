@@ -30,7 +30,9 @@ class pemesananContoller extends Controller
                            ->join('pemeriksaan as pm','pemesanan.id_pemeriksaan','pm.id_pemeriksaan')
                            ->select('pemesanan.*','p.*','pb.*','pm.*')
                            ->groupBy('pb.id_pemesanan')
+                           ->orderBy('pemesanan.tanggal_pemesanan', 'DESC')
                            ->get();
+                        //    dd($pemesanan);
             $detail      = DetailPemesanan::join('barang as b','detail_pemesanan.id_barang','b.id_barang')->get();
             return view ('konten/transaksi/pemesanan')->with(compact('pemeriksaan','pemesanan','detail'));
         }
